@@ -1,26 +1,53 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --color-ink: #09090b;
+  --color-paper: #e4e4e7;
+  --color-accent-violet: #7c3aed;
+  --color-accent-cyan: #22d3ee;
+  --color-accent-hot: #ff5a1f;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-ink: var(--color-ink);
+  --color-paper: var(--color-paper);
+  --color-accent-violet: var(--color-accent-violet);
+  --color-accent-cyan: var(--color-accent-cyan);
+  --color-accent-hot: var(--color-accent-hot);
+  --font-display: var(--font-space-grotesk);
+  --font-mono: var(--font-jetbrains-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: auto;
+  color-scheme: dark;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-ink);
+  color: var(--color-paper);
+}
+
+::selection {
+  background: var(--color-accent-violet);
+  color: white;
+}
+
+@keyframes fallback-node {
+  0%, 100% { transform: scale(1); opacity: 0.75; }
+  50% { transform: scale(1.35); opacity: 1; }
+}
+
+@keyframes fallback-edge {
+  0%, 100% { opacity: 0.15; }
+  50% { opacity: 0.55; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
 }

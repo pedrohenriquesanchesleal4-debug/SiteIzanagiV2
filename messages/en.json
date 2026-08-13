@@ -1,0 +1,119 @@
+{
+  "meta": {
+    "title": "Izanagi AI — The runtime that orchestrates engineering agents",
+    "description": "Agent and skill framework for autonomous software engineering: 21 specialized agents, adaptive routing, evaluation, self-healing and persistent memory."
+  },
+  "nav": {
+    "agents": "Agents",
+    "install": "Install",
+    "changelog": "Changelog",
+    "github": "GitHub",
+    "menuLabel": "Menu"
+  },
+  "hero": {
+    "eyebrow": "Agent framework for autonomous engineering",
+    "titleLine1": "Software isn't written",
+    "titleLine2": "alone anymore.",
+    "titleLine3": "It's orchestrated.",
+    "subtitle": "Izanagi is the runtime that routes, orchestrates, evaluates and heals 21 specialized agents — from the first requirement to deploy.",
+    "ctaPrimary": "See the agents",
+    "ctaSecondary": "Install now",
+    "scrollHint": "Scroll to explore"
+  },
+  "problem": {
+    "eyebrow": "The problem",
+    "title": "One AI agent alone isn't enough.",
+    "body": "Generic prompts produce generic code. Without architecture, without evaluation and without memory between runs, every task starts from zero — and repeats the same mistakes."
+  },
+  "whatIsIt": {
+    "eyebrow": "What Izanagi is",
+    "title": "A decision layer between you and the code.",
+    "body": "Every task passes through five layers before it becomes a line of code.",
+    "layers": {
+      "routing": { "title": "Routing", "desc": "Analyzes the task and automatically selects the right agent and skills." },
+      "orchestration": { "title": "Orchestration", "desc": "Composes chains of skills and agents into an execution graph." },
+      "evaluation": { "title": "Evaluation", "desc": "Measures every delivery against weighted metrics and an objective verdict." },
+      "healing": { "title": "Self-Healing", "desc": "Detects failures at runtime and corrects course on its own." },
+      "memory": { "title": "Memory", "desc": "Persistent anti-repetition memory across runs." }
+    }
+  },
+  "agentsSection": {
+    "eyebrow": "21 specialized agents",
+    "title": "A specialist for every decision.",
+    "body": "From requirements discovery to production deploy — every domain has a dedicated agent, chained through skill compositions.",
+    "domains": {
+      "discovery": "Discovery & Product",
+      "architecture": "Architecture & Engineering",
+      "quality": "Quality & Reliability",
+      "experience": "Experience & Content",
+      "meta": "Meta — Agent Factory"
+    },
+    "items": {
+      "discovery": { "title": "Discovery", "desc": "Pre-production: interview, real reference research and a rich prompt before any code." },
+      "product-reasoner": { "title": "Product Reasoner", "desc": "Turns vague intent into evidence-backed requirements and BDD acceptance criteria." },
+      "pm": { "title": "PM", "desc": "Breaks epics into deliverables, sprints, dependencies and a risk matrix." },
+      "researcher": { "title": "Researcher", "desc": "In-depth investigation with cited sources and a confidence level." },
+      "architect": { "title": "Architect", "desc": "Large-scale system design, Clean Architecture, DDD, CQRS and ADRs." },
+      "senior-engineer": { "title": "Senior Engineer", "desc": "Full-stack, end-to-end implementation, strict TDD, zero stubs." },
+      "techlead": { "title": "Tech Lead", "desc": "Pedagogical code review across 5 dimensions and standards governance." },
+      "database": { "title": "Database", "desc": "Relational and NoSQL modeling, advanced indexing, zero-downtime migrations." },
+      "devops": { "title": "DevOps", "desc": "CI/CD, Docker, Kubernetes, IaC and observability." },
+      "security": { "title": "Security", "desc": "OWASP Top 10, robust authentication and API hardening." },
+      "automation-engineer": { "title": "Automation Engineer", "desc": "Professional automation with idempotency, retries and structured logging." },
+      "form-engineer": { "title": "Form Engineer", "desc": "Validated forms, multi-step wizards and accessibility." },
+      "qa": { "title": "QA", "desc": "Unit tests, integration, resilient E2E and quality gates." },
+      "bug-hunter": { "title": "Bug Hunter", "desc": "6-phase debugging with root cause analysis and regression tests." },
+      "evaluator": { "title": "Evaluator", "desc": "Objective evaluation of deliverables with metrics and a verdict." },
+      "adversarial-critic": { "title": "Adversarial Critic", "desc": "Adversarial critique hunting bugs, security flaws and overengineering." },
+      "animation": { "title": "Animation", "desc": "Scrollytelling, WebGL 3D and cinematic motion signature." },
+      "docs": { "title": "Docs", "desc": "READMEs, Diátaxis-based documentation and architecture diagrams." },
+      "professor": { "title": "Professor", "desc": "Adaptive teaching with intuitive analogies and practice exercises." },
+      "agent-architect": { "title": "Agent Architect", "desc": "Designs new specialized agents on demand, without duplication." },
+      "skill-architect": { "title": "Skill Architect", "desc": "Curates new skills, avoiding duplication and proving real gaps." }
+    }
+  },
+  "install": {
+    "eyebrow": "Get started",
+    "title": "Three commands. Zero config.",
+    "body": "Izanagi detects your AI CLI — Claude Code, Cursor, Codex, Copilot or Kimi — and generates only the adapters you need.",
+    "steps": ["npm install -g izanagi-ai", "npx izanagi init", "npx izanagi run --task \"your first task\""],
+    "copy": "Copy",
+    "copied": "Copied",
+    "note": "Published on npm as izanagi-ai — MIT licensed."
+  },
+  "changelogTeaser": {
+    "eyebrow": "Always moving",
+    "title": "The framework evolves in public.",
+    "body": "Every commit and release shows up here — straight from GitHub, no manual curation.",
+    "cta": "See full changelog"
+  },
+  "cta": {
+    "title": "Stop writing prompts. Start orchestrating agents.",
+    "body": "21 agents, 212 skills, persistent memory — one command away.",
+    "primary": "npx izanagi init",
+    "secondary": "View on GitHub"
+  },
+  "footer": {
+    "tagline": "Architecture before code. Measured quality. Continuous evolution.",
+    "rights": "All rights reserved.",
+    "madeWith": "Built with Izanagi AI itself."
+  },
+  "changelogPage": {
+    "eyebrow": "Logs & Updates",
+    "title": "What changed, straight from GitHub.",
+    "subtitle": "The repository's latest releases and commits — refreshed automatically every hour.",
+    "releasesTitle": "Releases",
+    "commitsTitle": "Latest commits",
+    "empty": "No data available right now. Try again shortly.",
+    "viewOnGithub": "View on GitHub",
+    "viewCommit": "View commit",
+    "back": "Back to home",
+    "unreleased": "No version tag"
+  },
+  "localeSwitcher": {
+    "label": "Language"
+  },
+  "a11y": {
+    "skipToContent": "Skip to content"
+  }
+}

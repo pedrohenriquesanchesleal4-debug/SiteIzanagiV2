@@ -1,0 +1,119 @@
+{
+  "meta": {
+    "title": "Izanagi AI — El runtime que orquesta agentes de ingeniería",
+    "description": "Framework de agentes y skills para ingeniería de software autónoma: 21 agentes especializados, enrutamiento adaptativo, evaluación, autocuración y memoria persistente."
+  },
+  "nav": {
+    "agents": "Agentes",
+    "install": "Instalar",
+    "changelog": "Changelog",
+    "github": "GitHub",
+    "menuLabel": "Menú"
+  },
+  "hero": {
+    "eyebrow": "Framework de agentes para ingeniería autónoma",
+    "titleLine1": "El software ya no se",
+    "titleLine2": "escribe solo.",
+    "titleLine3": "Se orquesta.",
+    "subtitle": "Izanagi es el runtime que enruta, orquesta, evalúa y cura 21 agentes especializados — desde el primer requisito hasta el deploy.",
+    "ctaPrimary": "Ver los agentes",
+    "ctaSecondary": "Instalar ahora",
+    "scrollHint": "Desplázate para explorar"
+  },
+  "problem": {
+    "eyebrow": "El problema",
+    "title": "Un solo agente de IA no alcanza.",
+    "body": "Los prompts genéricos producen código genérico. Sin arquitectura, sin evaluación y sin memoria entre ejecuciones, cada tarea empieza de cero — y repite los mismos errores."
+  },
+  "whatIsIt": {
+    "eyebrow": "Qué es Izanagi",
+    "title": "Una capa de decisión entre vos y el código.",
+    "body": "Cada tarea pasa por cinco capas antes de convertirse en una línea de código.",
+    "layers": {
+      "routing": { "title": "Routing", "desc": "Analiza la tarea y selecciona automáticamente el agente y las skills adecuadas." },
+      "orchestration": { "title": "Orchestration", "desc": "Compone cadenas de skills y agentes en un grafo de ejecución." },
+      "evaluation": { "title": "Evaluation", "desc": "Mide cada entrega con métricas ponderadas y un veredicto objetivo." },
+      "healing": { "title": "Self-Healing", "desc": "Detecta fallos en tiempo de ejecución y corrige el rumbo por sí solo." },
+      "memory": { "title": "Memory", "desc": "Memoria persistente anti-repetición entre ejecuciones." }
+    }
+  },
+  "agentsSection": {
+    "eyebrow": "21 agentes especializados",
+    "title": "Un especialista para cada decisión.",
+    "body": "Desde el descubrimiento de requisitos hasta el deploy en producción — cada dominio tiene un agente dedicado, encadenado mediante composiciones de skills.",
+    "domains": {
+      "discovery": "Descubrimiento & Producto",
+      "architecture": "Arquitectura & Ingeniería",
+      "quality": "Calidad & Confiabilidad",
+      "experience": "Experiencia & Contenido",
+      "meta": "Meta — Fábrica de Agentes"
+    },
+    "items": {
+      "discovery": { "title": "Discovery", "desc": "Preproducción: entrevista, investigación de referencias reales y prompt rico antes de cualquier código." },
+      "product-reasoner": { "title": "Product Reasoner", "desc": "Convierte intención vaga en requisitos con evidencia y criterios de aceptación BDD." },
+      "pm": { "title": "PM", "desc": "Descompone épicas en entregables, sprints, dependencias y matriz de riesgos." },
+      "researcher": { "title": "Researcher", "desc": "Investigación profunda con fuentes citadas y nivel de confianza." },
+      "architect": { "title": "Architect", "desc": "Diseño de sistemas a gran escala, Clean Architecture, DDD, CQRS y ADRs." },
+      "senior-engineer": { "title": "Senior Engineer", "desc": "Implementación full-stack de punta a punta, TDD estricto, cero stubs." },
+      "techlead": { "title": "Tech Lead", "desc": "Code review pedagógico en 5 dimensiones y gobernanza de estándares." },
+      "database": { "title": "Database", "desc": "Modelado relacional y NoSQL, indexación avanzada, migraciones sin downtime." },
+      "devops": { "title": "DevOps", "desc": "CI/CD, Docker, Kubernetes, IaC y observabilidad." },
+      "security": { "title": "Security", "desc": "OWASP Top 10, autenticación robusta y hardening de APIs." },
+      "automation-engineer": { "title": "Automation Engineer", "desc": "Automatización profesional con idempotencia, reintentos y logging estructurado." },
+      "form-engineer": { "title": "Form Engineer", "desc": "Formularios validados, wizards multi-paso y accesibilidad." },
+      "qa": { "title": "QA", "desc": "Pruebas unitarias, integración, E2E resiliente y quality gates." },
+      "bug-hunter": { "title": "Bug Hunter", "desc": "Debugging en 6 fases con análisis de causa raíz y pruebas de regresión." },
+      "evaluator": { "title": "Evaluator", "desc": "Evaluación objetiva de entregas con métricas y veredicto." },
+      "adversarial-critic": { "title": "Adversarial Critic", "desc": "Crítica adversarial que caza bugs, fallos de seguridad y overengineering." },
+      "animation": { "title": "Animation", "desc": "Scrollytelling, WebGL 3D y firma de movimiento cinematográfica." },
+      "docs": { "title": "Docs", "desc": "READMEs, documentación basada en Diátaxis y diagramas de arquitectura." },
+      "professor": { "title": "Professor", "desc": "Enseñanza adaptativa con analogías intuitivas y ejercicios prácticos." },
+      "agent-architect": { "title": "Agent Architect", "desc": "Diseña nuevos agentes especializados bajo demanda, sin duplicación." },
+      "skill-architect": { "title": "Skill Architect", "desc": "Cura nuevas skills evitando duplicación y brechas reales." }
+    }
+  },
+  "install": {
+    "eyebrow": "Empezá ahora",
+    "title": "Tres comandos. Cero configuración.",
+    "body": "Izanagi detecta tu CLI de IA — Claude Code, Cursor, Codex, Copilot o Kimi — y genera solo los adapters que necesitás.",
+    "steps": ["npm install -g izanagi-ai", "npx izanagi init", "npx izanagi run --task \"tu primera tarea\""],
+    "copy": "Copiar",
+    "copied": "Copiado",
+    "note": "Publicado en npm como izanagi-ai — licencia MIT."
+  },
+  "changelogTeaser": {
+    "eyebrow": "Siempre en movimiento",
+    "title": "El framework evoluciona en público.",
+    "body": "Cada commit y release aparece acá — directo desde GitHub, sin curaduría manual.",
+    "cta": "Ver changelog completo"
+  },
+  "cta": {
+    "title": "Dejá de escribir prompts. Empezá a orquestar agentes.",
+    "body": "21 agentes, 212 skills, memoria persistente — a un comando de distancia.",
+    "primary": "npx izanagi init",
+    "secondary": "Ver en GitHub"
+  },
+  "footer": {
+    "tagline": "Arquitectura antes que código. Calidad medida. Evolución continua.",
+    "rights": "Todos los derechos reservados.",
+    "madeWith": "Construido con el propio Izanagi AI."
+  },
+  "changelogPage": {
+    "eyebrow": "Logs & Actualizaciones",
+    "title": "Qué cambió, directo desde GitHub.",
+    "subtitle": "Los releases y commits más recientes del repositorio — actualizado automáticamente cada hora.",
+    "releasesTitle": "Releases",
+    "commitsTitle": "Últimos commits",
+    "empty": "No hay datos disponibles por ahora. Intentá de nuevo en un momento.",
+    "viewOnGithub": "Ver en GitHub",
+    "viewCommit": "Ver commit",
+    "back": "Volver al inicio",
+    "unreleased": "Sin tag de versión"
+  },
+  "localeSwitcher": {
+    "label": "Idioma"
+  },
+  "a11y": {
+    "skipToContent": "Saltar al contenido"
+  }
+}
