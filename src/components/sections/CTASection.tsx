@@ -2,6 +2,7 @@
 
 import { useTranslations } from "next-intl";
 import { REPO_URL } from "@/content/agents";
+import { Magnetic } from "@/components/ui/Magnetic";
 
 export function CTASection() {
   const t = useTranslations("cta");
@@ -18,14 +19,16 @@ export function CTASection() {
           <code className="rounded-full bg-zinc-50 px-6 py-3 font-mono text-sm font-medium text-zinc-950">
             {t("primary")}
           </code>
-          <a
-            href={REPO_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="rounded-full border border-zinc-700 px-6 py-3 text-sm font-medium text-zinc-100 transition hover:border-zinc-400"
-          >
-            {t("secondary")}
-          </a>
+          <Magnetic>
+            <a
+              href={REPO_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-full border border-zinc-700 px-6 py-3 text-sm font-medium text-zinc-100 transition hover:border-zinc-400"
+            >
+              {t("secondary")}
+            </a>
+          </Magnetic>
         </div>
       </div>
     </section>

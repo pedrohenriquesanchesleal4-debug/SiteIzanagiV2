@@ -4,6 +4,8 @@ import { Canvas } from "@react-three/fiber";
 import { Suspense, useEffect, useRef, useState } from "react";
 import { AgentGraph } from "./AgentGraph";
 import { GraphFallback } from "./GraphFallback";
+import { CameraRig } from "./CameraRig";
+import { PostFX } from "./PostFX";
 
 type Capability = "checking" | "full" | "fallback";
 
@@ -62,9 +64,11 @@ export function SceneHost({
       <ambientLight intensity={0.6} />
       <pointLight position={[6, 6, 6]} intensity={40} color="#22D3EE" />
       <pointLight position={[-6, -4, 4]} intensity={30} color="#7C3AED" />
+      <CameraRig progressRef={progressRef} />
       <Suspense fallback={null}>
         <AgentGraph progressRef={progressRef} />
       </Suspense>
+      <PostFX progressRef={progressRef} />
     </Canvas>
   );
 }

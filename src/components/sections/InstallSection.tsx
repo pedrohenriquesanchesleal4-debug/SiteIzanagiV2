@@ -3,6 +3,7 @@
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { INSTALL_COMMAND } from "@/content/agents";
+import { ScrambleLabel } from "@/components/ui/ScrambleLabel";
 
 function CopyableLine({ text }: { text: string }) {
   const t = useTranslations("install");
@@ -40,9 +41,7 @@ export function InstallSection() {
   return (
     <section id="install" className="relative bg-zinc-950 px-6 py-28 sm:px-12">
       <div className="mx-auto max-w-3xl">
-        <p className="font-mono text-xs uppercase tracking-[0.3em] text-cyan-400">
-          {t("eyebrow")}
-        </p>
+        <ScrambleLabel text={t("eyebrow")} className="font-mono text-xs uppercase tracking-[0.3em] text-cyan-400" />
         <h2 className="mt-4 font-display text-3xl font-semibold text-zinc-50 sm:text-5xl">
           {t("title")}
         </h2>

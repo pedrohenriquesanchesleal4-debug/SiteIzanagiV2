@@ -4,6 +4,7 @@ import { useTranslations } from "next-intl";
 import { useEffect, useRef } from "react";
 import { AGENTS, DOMAIN_ORDER, type AgentDomain } from "@/content/agents";
 import { gsap, ScrollTrigger } from "@/lib/scroll";
+import { ScrambleLabel } from "@/components/ui/ScrambleLabel";
 
 const DOMAIN_ACCENT: Record<AgentDomain, string> = {
   discovery: "from-cyan-400/20 to-transparent",
@@ -41,9 +42,7 @@ export function AgentsGrid() {
   return (
     <section id="agents" ref={rootRef} className="relative bg-zinc-950 px-6 py-28 sm:px-12">
       <div className="mx-auto max-w-6xl">
-        <p className="font-mono text-xs uppercase tracking-[0.3em] text-cyan-400">
-          {t("eyebrow")}
-        </p>
+        <ScrambleLabel text={t("eyebrow")} className="font-mono text-xs uppercase tracking-[0.3em] text-cyan-400" />
         <h2 className="mt-4 max-w-2xl font-display text-3xl font-semibold text-zinc-50 sm:text-5xl">
           {t("title")}
         </h2>

@@ -3,15 +3,27 @@
 import { useFrame } from "@react-three/fiber";
 import { useMemo, useRef } from "react";
 import * as THREE from "three";
+import { createNoise4D } from "simplex-noise";
+import { sampleTextPoints } from "@/lib/textPoints";
 
 const CLUSTER_COUNT = 5;
-const POINTS_PER_CLUSTER = 16;
+const POINTS_PER_CLUSTER = 144;
 const TOTAL_POINTS = CLUSTER_COUNT * POINTS_PER_CLUSTER;
-const SCATTER_RADIUS = 6.5;
+const CHAOS_RADIUS = 7;
 const CLUSTER_RADIUS = 4.2;
+const WORDMARK_SCALE_X = 2.5;
+const WORDMARK_SCALE_Y = 0.74;
+const WORDMARK_OFFSET_X = 2.5;
+const WORDMARK_OFFSET_Y = 0.9;
 
 const ACCENT_START = new THREE.Color("#7C3AED");
 const ACCENT_END = new THREE.Color("#22D3EE");
+const WORDMARK_COLOR = new THREE.Color("#F4F4F5");
+
+function smoothstep(edge0: number, edge1: number, x: number) {
+  const t = THREE.MathUtils.clamp((x - edge0) / (edge1 - edge0), 0, 1);
+  return t * t * (3 - 2 * t);
+}
 
 function randomOnSphere(radius: number) {
   const u = Math.random();
@@ -26,12 +38,42 @@ function randomOnSphere(radius: number) {
   );
 }
 
+// Soft, glowing, alpha-blended points with a hot core — rendered procedurally
+// (smoothstep on gl_PointCoord) instead of a baked canvas sprite, so edges
+// stay crisp at any zoom and the core can carry its own color grade.
+const VERTEX_SHADER = /* glsl */ `
+  attribute float aSize;
+  uniform float uSizeScale;
+  varying vec3 vColor;
+  void main() {
+    vColor = color;
+    vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
+    gl_PointSize = aSize * uSizeScale * (420.0 / -mvPosition.z);
+    gl_Position = projectionMatrix * mvPosition;
+  }
+`;
+
+const FRAGMENT_SHADER = /* glsl */ `
+  uniform float uCoreBoost;
+  uniform float uAlphaScale;
+  varying vec3 vColor;
+  void main() {
+    float dist = length(gl_PointCoord - vec2(0.5));
+    float alpha = smoothstep(0.5, 0.05, dist);
+    float core = smoothstep(0.16, 0.0, dist);
+    vec3 finalColor = vColor + core * uCoreBoost;
+    gl_FragColor = vec4(finalColor, alpha * alpha * uAlphaScale);
+  }
+`;
+
 interface NodeDatum {
-  scattered: THREE.Vector3;
-  grouped: THREE.Vector3;
-  cluster: number;
+  wordmark: THREE.Vector3;
+  chaos: THREE.Vector3;
+  cluster: THREE.Vector3;
+  clusterIndex: number;
   delay: number;
-  spinSpeed: number;
+  flowSeed: number;
+  size: number;
 }
 
 export interface AgentGraphProps {
@@ -39,13 +81,32 @@ export interface AgentGraphProps {
   progressRef: React.MutableRefObject<number>;
 }
 
+/**
+ * The hero centerpiece: IZANAGI materializes out of noise (wordmark),
+ * dissolves into a flow-noise turbulence field as the "problem" copy lands
+ * (particles are advected by a simplex-noise vector field, not just jittered
+ * randomly — real fluid-like motion), then resolves into the five-cluster
+ * agent network as "what Izanagi is" explains the layers.
+ */
 export function AgentGraph({ progressRef }: AgentGraphProps) {
   const pointsRef = useRef<THREE.Points>(null);
+  const materialRef = useRef<THREE.ShaderMaterial>(null);
   const linesRef = useRef<THREE.LineSegments>(null);
   const groupRef = useRef<THREE.Group>(null);
   const lastBucketRef = useRef(-1);
+  const noise = useMemo(() => createNoise4D(), []);
+  const uniforms = useMemo(
+    () => ({
+      uSizeScale: { value: 1 },
+      uCoreBoost: { value: 0.55 },
+      uAlphaScale: { value: 1 },
+    }),
+    []
+  );
 
   const nodes = useMemo<NodeDatum[]>(() => {
+    const wordmarkPoints = sampleTextPoints("IZANAGI", { count: TOTAL_POINTS });
+
     const clusterCenters = Array.from({ length: CLUSTER_COUNT }, (_, i) => {
       const angle = (i / CLUSTER_COUNT) * Math.PI * 2;
       return new THREE.Vector3(
@@ -56,32 +117,40 @@ export function AgentGraph({ progressRef }: AgentGraphProps) {
     });
 
     return Array.from({ length: TOTAL_POINTS }, (_, i) => {
-      const cluster = i % CLUSTER_COUNT;
-      const center = clusterCenters[cluster];
+      const clusterIndex = i % CLUSTER_COUNT;
+      const center = clusterCenters[clusterIndex];
       const local = randomOnSphere(1.1);
+      const wp = wordmarkPoints[i] ?? { x: 0, y: 0 };
+
       return {
-        scattered: randomOnSphere(SCATTER_RADIUS),
-        grouped: center.clone().add(local),
-        cluster,
+        wordmark: new THREE.Vector3(
+          wp.x * WORDMARK_SCALE_X + WORDMARK_OFFSET_X + (Math.random() - 0.5) * 0.04,
+          wp.y * WORDMARK_SCALE_Y + WORDMARK_OFFSET_Y + (Math.random() - 0.5) * 0.04,
+          (Math.random() - 0.5) * 0.3
+        ),
+        chaos: randomOnSphere(CHAOS_RADIUS),
+        cluster: center.clone().add(local),
+        clusterIndex,
         delay: Math.random() * 0.35,
-        spinSpeed: 0.05 + Math.random() * 0.08,
+        flowSeed: Math.random() * 1000,
+        size: 0.65 + Math.random() * 0.9,
       };
     });
   }, []);
 
-  const { positions, colors } = useMemo(() => {
+  const { positions, colors, sizes } = useMemo(() => {
     const positions = new Float32Array(TOTAL_POINTS * 3);
     const colors = new Float32Array(TOTAL_POINTS * 3);
+    const sizes = new Float32Array(TOTAL_POINTS);
     nodes.forEach((n, i) => {
-      n.scattered.toArray(positions, i * 3);
-      const t = n.cluster / (CLUSTER_COUNT - 1);
-      const c = ACCENT_START.clone().lerp(ACCENT_END, t);
-      c.toArray(colors, i * 3);
+      n.wordmark.toArray(positions, i * 3);
+      WORDMARK_COLOR.toArray(colors, i * 3);
+      sizes[i] = n.size;
     });
-    return { positions, colors };
+    return { positions, colors, sizes };
   }, [nodes]);
 
-  const maxLines = TOTAL_POINTS * 4;
+  const maxLines = TOTAL_POINTS * 2;
   const linePositions = useMemo(() => new Float32Array(maxLines * 2 * 3), [maxLines]);
 
   useFrame((state, delta) => {
@@ -90,8 +159,30 @@ export function AgentGraph({ progressRef }: AgentGraphProps) {
     const posAttr = geometry?.getAttribute("position") as
       | THREE.BufferAttribute
       | undefined;
+    const colorAttr = geometry?.getAttribute("color") as
+      | THREE.BufferAttribute
+      | undefined;
 
-    if (posAttr) {
+    // Phase weights: wordmark -> chaos -> cluster, always summing to 1.
+    const t1 = smoothstep(0.16, 0.32, progress);
+    const t2 = smoothstep(0.56, 0.74, progress);
+    const wWordmark = 1 - t1;
+    const wChaos = t1 * (1 - t2);
+    const wCluster = t1 * t2;
+    const time = state.clock.elapsedTime;
+    const flowStrength = wChaos * 1.4;
+    const flowFreq = 0.14;
+    const flowSpeed = 0.12;
+
+    // The wordmark packs ~700 points into a small on-screen area; with
+    // additive blending, letting them stay full-size/full-alpha overlaps
+    // into one solid blob (no letter gaps survive). Shrink and dim them
+    // hard while the wordmark is legible, then grow back for chaos/cluster.
+    uniforms.uSizeScale.value = THREE.MathUtils.lerp(0.22, 1.05, 1 - wWordmark);
+    uniforms.uCoreBoost.value = THREE.MathUtils.lerp(0.08, 0.55, 1 - wWordmark);
+    uniforms.uAlphaScale.value = THREE.MathUtils.lerp(0.55, 1, 1 - wWordmark);
+
+    if (posAttr && colorAttr) {
       nodes.forEach((n, i) => {
         const local = THREE.MathUtils.clamp(
           (progress - n.delay) / (1 - n.delay || 1),
@@ -99,30 +190,62 @@ export function AgentGraph({ progressRef }: AgentGraphProps) {
           1
         );
         const eased = local * local * (3 - 2 * local);
-        const x = THREE.MathUtils.lerp(n.scattered.x, n.grouped.x, eased);
-        const y = THREE.MathUtils.lerp(n.scattered.y, n.grouped.y, eased);
-        const z = THREE.MathUtils.lerp(n.scattered.z, n.grouped.z, eased);
+
+        // Flow-noise advection: three decorrelated 4D simplex samples (seeded
+        // per axis) act as a smoothly time-varying displacement field, so
+        // particles drift like turbulence/smoke instead of jittering in place.
+        const fx = n.chaos.x * flowFreq;
+        const fy = n.chaos.y * flowFreq;
+        const fz = n.chaos.z * flowFreq;
+        const tw = time * flowSpeed;
+        const flowX = noise(fx, fy, fz + n.flowSeed, tw) * flowStrength;
+        const flowY = noise(fx + 37.1, fy + 11.4, fz + n.flowSeed, tw) * flowStrength;
+        const flowZ = noise(fx + 71.9, fy + 53.2, fz + n.flowSeed, tw) * flowStrength;
+
+        const x = THREE.MathUtils.lerp(
+          THREE.MathUtils.lerp(n.wordmark.x, n.chaos.x + flowX, eased),
+          n.cluster.x,
+          wCluster
+        );
+        const y = THREE.MathUtils.lerp(
+          THREE.MathUtils.lerp(n.wordmark.y, n.chaos.y + flowY, eased),
+          n.cluster.y,
+          wCluster
+        );
+        const z = THREE.MathUtils.lerp(
+          THREE.MathUtils.lerp(n.wordmark.z, n.chaos.z + flowZ, eased),
+          n.cluster.z,
+          wCluster
+        );
+
         posAttr.setXYZ(i, x, y, z);
+
+        const clusterT = n.clusterIndex / (CLUSTER_COUNT - 1);
+        const clusterColor = ACCENT_START.clone().lerp(ACCENT_END, clusterT);
+        const r = THREE.MathUtils.lerp(WORDMARK_COLOR.r, clusterColor.r, 1 - wWordmark);
+        const g = THREE.MathUtils.lerp(WORDMARK_COLOR.g, clusterColor.g, 1 - wWordmark);
+        const b = THREE.MathUtils.lerp(WORDMARK_COLOR.b, clusterColor.b, 1 - wWordmark);
+        colorAttr.setXYZ(i, r, g, b);
       });
       posAttr.needsUpdate = true;
+      colorAttr.needsUpdate = true;
     }
 
-    const bucket = Math.floor(progress * 12);
-    if (bucket !== lastBucketRef.current && linesRef.current) {
+    const bucket = Math.floor(progress * 40);
+    if (bucket !== lastBucketRef.current && linesRef.current && posAttr) {
       lastBucketRef.current = bucket;
       let edgeCount = 0;
-      const connectThreshold = 0.4;
 
-      if (progress > connectThreshold && posAttr) {
+      if (wCluster > 0.15) {
         for (let c = 0; c < CLUSTER_COUNT; c++) {
           const members = nodes
             .map((n, i) => ({ n, i }))
-            .filter(({ n }) => n.cluster === c);
+            .filter(({ n }) => n.clusterIndex === c);
 
           for (let a = 0; a < members.length; a++) {
             for (let b = a + 1; b < members.length; b++) {
               if (edgeCount >= maxLines) break;
-              if (Math.random() > 0.35) continue;
+              if (Math.random() > 0.08) continue;
               const ia = members[a].i;
               const ib = members[b].i;
               linePositions[edgeCount * 6] = posAttr.getX(ia);
@@ -142,17 +265,18 @@ export function AgentGraph({ progressRef }: AgentGraphProps) {
       const lineAttr = lineGeom.getAttribute("position") as THREE.BufferAttribute;
       lineAttr.set(linePositions);
       lineAttr.needsUpdate = true;
-      (lineGeom as THREE.BufferGeometry).computeBoundingSphere();
+      lineGeom.computeBoundingSphere();
     }
 
     if (linesRef.current) {
       const mat = linesRef.current.material as THREE.LineBasicMaterial;
-      mat.opacity = THREE.MathUtils.clamp((progress - 0.4) / 0.3, 0, 1) * 0.5;
+      mat.opacity = wCluster * 0.45;
     }
 
     if (groupRef.current) {
-      groupRef.current.rotation.y += delta * (0.04 + progress * 0.05);
-      groupRef.current.rotation.x = Math.sin(state.clock.elapsedTime * 0.08) * 0.08;
+      const spin = 0.03 + wChaos * 0.1 + wCluster * 0.03;
+      groupRef.current.rotation.y += delta * spin;
+      groupRef.current.rotation.x = Math.sin(time * 0.07) * (0.05 + wChaos * 0.06);
     }
   });
 
@@ -162,14 +286,17 @@ export function AgentGraph({ progressRef }: AgentGraphProps) {
         <bufferGeometry>
           <bufferAttribute attach="attributes-position" args={[positions, 3]} />
           <bufferAttribute attach="attributes-color" args={[colors, 3]} />
+          <bufferAttribute attach="attributes-aSize" args={[sizes, 1]} />
         </bufferGeometry>
-        <pointsMaterial
-          size={0.09}
+        <shaderMaterial
+          ref={materialRef}
+          vertexShader={VERTEX_SHADER}
+          fragmentShader={FRAGMENT_SHADER}
+          uniforms={uniforms}
           vertexColors
           transparent
-          opacity={0.9}
-          sizeAttenuation
           depthWrite={false}
+          blending={THREE.AdditiveBlending}
         />
       </points>
       <lineSegments ref={linesRef}>
@@ -184,7 +311,7 @@ export function AgentGraph({ progressRef }: AgentGraphProps) {
           blending={THREE.AdditiveBlending}
         />
       </lineSegments>
-      <fog attach="fog" args={["#09090b", 8, 20]} />
+      <fog attach="fog" args={["#09090b", 7, 19]} />
     </group>
   );
 }

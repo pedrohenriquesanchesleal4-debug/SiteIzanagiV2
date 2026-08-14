@@ -8,6 +8,8 @@ import { routing } from "@/i18n/routing";
 import { SmoothScrollProvider } from "@/lib/scroll";
 import { Nav } from "@/components/ui/Nav";
 import { Footer } from "@/components/ui/Footer";
+import { ChatWidget } from "@/components/ui/ChatWidget";
+import { GrainOverlay } from "@/components/ui/GrainOverlay";
 import "../globals.css";
 
 const spaceGrotesk = Space_Grotesk({
@@ -63,9 +65,11 @@ export default async function LocaleLayout({
             >
               {t("skipToContent")}
             </a>
+            <GrainOverlay />
             <Nav />
             <main id="main">{children}</main>
             <Footer />
+            <ChatWidget />
           </SmoothScrollProvider>
         </NextIntlClientProvider>
       </body>

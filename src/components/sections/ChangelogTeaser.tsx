@@ -1,6 +1,7 @@
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { getCommits } from "@/lib/github";
+import { ScrambleLabel } from "@/components/ui/ScrambleLabel";
 
 export async function ChangelogTeaser() {
   const t = await getTranslations("changelogTeaser");
@@ -9,9 +10,7 @@ export async function ChangelogTeaser() {
   return (
     <section className="relative bg-zinc-950 px-6 py-28 sm:px-12">
       <div className="mx-auto max-w-3xl">
-        <p className="font-mono text-xs uppercase tracking-[0.3em] text-cyan-400">
-          {t("eyebrow")}
-        </p>
+        <ScrambleLabel text={t("eyebrow")} className="font-mono text-xs uppercase tracking-[0.3em] text-cyan-400" />
         <h2 className="mt-4 font-display text-3xl font-semibold text-zinc-50 sm:text-5xl">
           {t("title")}
         </h2>

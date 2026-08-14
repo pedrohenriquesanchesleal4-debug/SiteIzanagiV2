@@ -115,5 +115,15 @@
   },
   "a11y": {
     "skipToContent": "Skip to content"
+  },
+  "chat": {
+    "launcherLabel": "Ask Izanagi",
+    "title": "Izanagi Assistant",
+    "subtitle": "Trained on the framework's own docs",
+    "placeholder": "Ask about agents, install, skills...",
+    "send": "Send",
+    "greeting": "Hi — I'm the Izanagi assistant, trained on the framework's own docs. Ask me anything about the 21 agents, installation, or how the runtime works.",
+    "error": "Something went wrong. Try again in a moment.",
+    "close": "Close"
   }
 }

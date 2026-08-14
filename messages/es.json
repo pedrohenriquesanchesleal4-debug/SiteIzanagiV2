@@ -115,5 +115,15 @@
   },
   "a11y": {
     "skipToContent": "Saltar al contenido"
+  },
+  "chat": {
+    "launcherLabel": "Preguntale a Izanagi",
+    "title": "Asistente Izanagi",
+    "subtitle": "Entrenado con la documentación real del framework",
+    "placeholder": "Preguntá sobre agentes, instalación, skills...",
+    "send": "Enviar",
+    "greeting": "Hola — soy el asistente de Izanagi, entrenado con la documentación real del framework. Preguntame lo que quieras sobre los 21 agentes, la instalación o cómo funciona el runtime.",
+    "error": "Algo salió mal. Probá de nuevo en un momento.",
+    "close": "Cerrar"
   }
 }
