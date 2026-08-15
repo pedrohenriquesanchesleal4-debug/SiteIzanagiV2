@@ -10,7 +10,7 @@ import { fileURLToPath } from "node:url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const SITE_ROOT = path.resolve(__dirname, "..");
-const PKG_ROOT = path.resolve(SITE_ROOT, "..", "node_modules", "izanagi-ai");
+const PKG_ROOT = path.resolve(SITE_ROOT, "node_modules", "izanagi-ai");
 const OUT_PATH = path.join(SITE_ROOT, "src", "content", "rag-index.json");
 const EMBED_MODEL = "gemini-embedding-001";
 const BATCH_SIZE = 20;

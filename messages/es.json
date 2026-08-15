@@ -11,31 +11,45 @@
     "menuLabel": "Menú"
   },
   "hero": {
-    "eyebrow": "Framework de agentes para ingeniería autónoma",
-    "titleLine1": "El software ya no se",
-    "titleLine2": "escribe solo.",
-    "titleLine3": "Se orquesta.",
-    "subtitle": "Izanagi es el runtime que enruta, orquesta, evalúa y cura 21 agentes especializados — desde el primer requisito hasta el deploy.",
-    "ctaPrimary": "Ver los agentes",
-    "ctaSecondary": "Instalar ahora",
-    "scrollHint": "Desplázate para explorar"
+    "eyebrow": "INTENCIÓN · CONTEXTO · SKILLS · AGENTES · EJECUCIÓN · VALIDACIÓN · MEMORIA · EVOLUCIÓN",
+    "titleLine1": "IZANAGI",
+    "titleLine2": "DE LA INTENCIÓN",
+    "titleLine3": "AL SOFTWARE.",
+    "subtitle": "Una línea de intención se convierte en contexto, skills y agentes en movimiento — validados, recordados, reincorporados al sistema que los creó.",
+    "scrollHint": "Desplazate para entrar al sistema"
   },
   "problem": {
-    "eyebrow": "El problema",
-    "title": "Un solo agente de IA no alcanza.",
-    "body": "Los prompts genéricos producen código genérico. Sin arquitectura, sin evaluación y sin memoria entre ejecuciones, cada tarea empieza de cero — y repite los mismos errores."
+    "eyebrow": "Escena 01 — Antes del sistema",
+    "titleLine1": "Una idea es fácil.",
+    "titleLine2": "Ejecutarla no lo es.",
+    "body": "Un prompt no es un plan. Sin arquitectura, sin evaluación y sin memoria entre ejecuciones, cada tarea arranca de cero — y repite los mismos errores."
+  },
+  "intent": {
+    "eyebrow": "Escena 02 — La intención se vuelve contexto",
+    "titleLine1": "Toda tarea empieza con una intención.",
+    "titleLine2": "La intención necesita contexto.",
+    "body": "Decís lo que querés, una sola vez, en lenguaje natural. Izanagi lee el pedido contra tu código, tus convenciones y tu historial — porque intención sin contexto es solo una suposición disfrazada de plan."
   },
   "whatIsIt": {
-    "eyebrow": "Qué es Izanagi",
-    "title": "Una capa de decisión entre vos y el código.",
-    "body": "Cada tarea pasa por cinco capas antes de convertirse en una línea de código.",
+    "eyebrow": "Escena 03 — El contexto se vuelve código",
+    "titleLine1": "El contexto selecciona capacidades.",
+    "titleLine2": "Las capacidades se vuelven acción.",
+    "body": "Cinco capas separan lo que pediste de lo que sale a producción — cada una es un filtro que el trabajo tiene que atravesar.",
     "layers": {
-      "routing": { "title": "Routing", "desc": "Analiza la tarea y selecciona automáticamente el agente y las skills adecuadas." },
-      "orchestration": { "title": "Orchestration", "desc": "Compone cadenas de skills y agentes en un grafo de ejecución." },
-      "evaluation": { "title": "Evaluation", "desc": "Mide cada entrega con métricas ponderadas y un veredicto objetivo." },
-      "healing": { "title": "Self-Healing", "desc": "Detecta fallos en tiempo de ejecución y corrige el rumbo por sí solo." },
-      "memory": { "title": "Memory", "desc": "Memoria persistente anti-repetición entre ejecuciones." }
+      "routing": { "title": "Contexto & Routing", "desc": "Lee la tarea contra tu repositorio y elige el agente y las skills exactas que necesita — sin configuración manual." },
+      "orchestration": { "title": "Agentes en Movimiento", "desc": "Compone las skills y agentes elegidos en un grafo de ejecución vivo y lo corre de punta a punta." },
+      "evaluation": { "title": "Validación", "desc": "Nada sale sin revisión — cada entrega se puntúa con métricas ponderadas y un veredicto objetivo." },
+      "healing": { "title": "Self-Healing", "desc": "Las fallas aparecen en tiempo de ejecución y se corrigen en la misma corrida, no en un ticket futuro." },
+      "memory": { "title": "Memoria", "desc": "Lo que falló, y por qué, queda registrado — para que la próxima corrida empiece más inteligente, no de cero." }
     }
+  },
+  "evolution": {
+    "eyebrow": "Escena 04 — El ciclo se cierra",
+    "titleLine1": "Toda falla se vuelve memoria.",
+    "titleLine2": "El sistema evoluciona.",
+    "body": "Nada de lo que pasa en una corrida se pierde. Todo realimenta la siguiente — el enrutamiento se afina, las skills se depuran, toda la estructura se reorganiza alrededor de lo que realmente funciona.",
+    "ctaPrimary": "Ver los agentes",
+    "ctaSecondary": "Instalar ahora"
   },
   "agentsSection": {
     "eyebrow": "21 agentes especializados",
@@ -70,7 +84,47 @@
       "professor": { "title": "Professor", "desc": "Enseñanza adaptativa con analogías intuitivas y ejercicios prácticos." },
       "agent-architect": { "title": "Agent Architect", "desc": "Diseña nuevos agentes especializados bajo demanda, sin duplicación." },
       "skill-architect": { "title": "Skill Architect", "desc": "Cura nuevas skills evitando duplicación y brechas reales." }
+    },
+    "atlas": {
+      "empty": "Seleccioná un agente en el mapa para ver sus detalles.",
+      "role": "Responsabilidad",
+      "skills": "Skills",
+      "handoffs": "Handoffs",
+      "handoffsEmpty": "Sin handoffs de salida — nodo terminal.",
+      "always": "Siempre",
+      "never": "Nunca",
+      "files": "Archivos relevantes",
+      "agentFile": "Definición del agente",
+      "skillFiles": "Archivo de skill",
+      "moreFiles": "+{count} archivos de skill más",
+      "search": "Buscar agentes…",
+      "noResults": "Ningún agente coincide con la búsqueda."
     }
+  },
+  "skillsSection": {
+    "eyebrow": "103 skills componibles",
+    "title": "Todo el universo de skills, buscable.",
+    "body": "{count} skills alimentan los agentes de arriba. Busca por nombre, categoría o palabra clave — postgres, security, frontend, testing, architecture — y el universo se reorganiza según lo que coincide.",
+    "searchPlaceholder": "Busca skills — postgres, security, frontend, testing...",
+    "resultCount": "{count} / {total}",
+    "allCategories": "Todas",
+    "categories": {
+      "testing-qa": "Testing & QA",
+      "security": "Seguridad",
+      "database": "Base de Datos",
+      "devops": "DevOps",
+      "frontend": "Frontend",
+      "architecture": "Arquitectura",
+      "ai-agent": "IA & Agentes",
+      "documentation": "Documentación",
+      "misc": "Otras"
+    },
+    "usedBy": "Usada por",
+    "noAgents": "No referenciada directamente por ningún agente.",
+    "location": "Ubicación en el repositorio",
+    "dependencies": "Skills relacionadas (misma cadena de workflow)",
+    "close": "Cerrar",
+    "emptyState": "Ninguna skill coincide. Prueba otro término."
   },
   "install": {
     "eyebrow": "Empezá ahora",
@@ -125,5 +179,24 @@
     "greeting": "Hola — soy el asistente de Izanagi, entrenado con la documentación real del framework. Preguntame lo que quieras sobre los 21 agentes, la instalación o cómo funciona el runtime.",
     "error": "Algo salió mal. Probá de nuevo en un momento.",
     "close": "Cerrar"
+  },
+  "commandPalette": {
+    "title": "Paleta de comandos",
+    "placeholder": "Andá a una sección o preguntá algo...",
+    "esc": "Esc",
+    "close": "Cerrar la paleta de comandos",
+    "noResults": "Sin resultados.",
+    "agents": "Agentes",
+    "agentsHint": "Ir al atlas de agentes",
+    "skills": "Skills",
+    "skillsHint": "Ir al universo de skills",
+    "install": "Instalar",
+    "installHint": "Ir a las instrucciones de instalación",
+    "changelog": "Changelog",
+    "changelogHint": "Ir a la página de changelog",
+    "github": "GitHub",
+    "githubHint": "Abrir el repositorio",
+    "chat": "Preguntale a Izanagi",
+    "chatHint": "Abrir el asistente de chat"
   }
 }

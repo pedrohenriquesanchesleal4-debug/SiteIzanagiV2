@@ -1,13 +1,13 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { SceneHost } from "@/components/canvas/SceneHost";
 import { gsap, ScrollTrigger } from "@/lib/scroll";
-import { LAYER_KEYS } from "@/content/agents";
+import { LAYER_KEYS, INSTALL_COMMAND } from "@/content/agents";
 import { Magnetic } from "@/components/ui/Magnetic";
 
-const ACT_COUNT = 3;
+const ACT_COUNT = 5;
 
 /**
  * Windowed cross-fade for act `i` out of `ACT_COUNT`, driven purely by the
@@ -31,12 +31,41 @@ function actOpacity(progress: number, i: number) {
   return Math.min(Math.max(opacity, 0), 1);
 }
 
+function InstallCommandLine() {
+  const t = useTranslations("install");
+  const [copied, setCopied] = useState(false);
+
+  return (
+    <button
+      type="button"
+      onClick={async () => {
+        try {
+          await navigator.clipboard.writeText(INSTALL_COMMAND);
+          setCopied(true);
+          setTimeout(() => setCopied(false), 1800);
+        } catch {
+          /* clipboard unavailable — no-op, the command is still selectable text */
+        }
+      }}
+      className="group flex w-full max-w-md items-center justify-between gap-4 rounded-xl border border-zinc-700 bg-zinc-900/60 px-5 py-3.5 text-left transition hover:border-zinc-400"
+    >
+      <code className="font-mono text-sm text-zinc-200 sm:text-base">
+        <span className="select-none text-zinc-600">$ </span>
+        {INSTALL_COMMAND}
+      </code>
+      <span className="shrink-0 font-mono text-xs text-zinc-500 group-hover:text-accent">
+        {copied ? t("copied") : t("copy")}
+      </span>
+    </button>
+  );
+}
+
 export function StoryDesktop() {
   const t = useTranslations();
   const wrapperRef = useRef<HTMLDivElement>(null);
   const actRefs = useRef<(HTMLDivElement | null)[]>([]);
   const eyebrowRefs = useRef<(HTMLParagraphElement | null)[]>([]);
-  const scrambledRef = useRef<boolean[]>([false, false, false]);
+  const scrambledRef = useRef<boolean[]>([false, false, false, false, false]);
   const progressRef = useRef(0);
 
   useEffect(() => {
@@ -90,13 +119,14 @@ export function StoryDesktop() {
   }, []);
 
   return (
-    <section ref={wrapperRef} className="relative" style={{ height: "320vh" }}>
+    <section ref={wrapperRef} className="relative" style={{ height: "540vh" }}>
       <div className="sticky top-0 h-screen w-full overflow-hidden bg-zinc-950">
         <div className="absolute inset-0">
           <SceneHost progressRef={progressRef} />
         </div>
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-zinc-950/40 via-transparent to-zinc-950" />
 
+        {/* Act 0 — Hero: cinematic boot. IZANAGI, then the pipeline it runs on. */}
         <div
           ref={(el) => {
             actRefs.current[0] = el;
@@ -108,7 +138,7 @@ export function StoryDesktop() {
               ref={(el) => {
                 eyebrowRefs.current[0] = el;
               }}
-              className="mb-4 font-mono text-xs uppercase tracking-[0.3em] text-accent"
+              className="mb-4 font-mono text-[11px] uppercase tracking-[0.25em] text-accent sm:text-xs"
             >
               {t("hero.eyebrow")}
             </p>
@@ -120,23 +150,8 @@ export function StoryDesktop() {
               <span className="text-accent">{t("hero.titleLine3")}</span>
             </h1>
             <p className="mt-6 max-w-xl text-lg text-zinc-400">{t("hero.subtitle")}</p>
-            <div className="mt-9 flex flex-wrap gap-4">
-              <Magnetic>
-                <a
-                  href="#agents"
-                  className="rounded-full bg-zinc-50 px-6 py-3 text-sm font-medium text-zinc-950 transition hover:bg-accent"
-                >
-                  {t("hero.ctaPrimary")}
-                </a>
-              </Magnetic>
-              <Magnetic>
-                <a
-                  href="#install"
-                  className="rounded-full border border-zinc-700 px-6 py-3 text-sm font-medium text-zinc-100 transition hover:border-zinc-400"
-                >
-                  {t("hero.ctaSecondary")}
-                </a>
-              </Magnetic>
+            <div className="mt-9">
+              <InstallCommandLine />
             </div>
             <p className="mt-14 font-mono text-[11px] uppercase tracking-[0.3em] text-zinc-600">
               {t("hero.scrollHint")}
@@ -144,6 +159,7 @@ export function StoryDesktop() {
           </div>
         </div>
 
+        {/* Act 1 — Scene 1: an idea is easy, execution is not. */}
         <div
           ref={(el) => {
             actRefs.current[1] = el;
@@ -159,13 +175,16 @@ export function StoryDesktop() {
             >
               {t("problem.eyebrow")}
             </p>
-            <h2 className="font-display text-3xl font-semibold text-zinc-50 sm:text-5xl">
-              {t("problem.title")}
+            <h2 className="font-display text-3xl font-semibold leading-[1.1] text-zinc-50 sm:text-5xl">
+              {t("problem.titleLine1")}
+              <br />
+              <span className="text-accent">{t("problem.titleLine2")}</span>
             </h2>
             <p className="mt-6 text-lg text-zinc-400">{t("problem.body")}</p>
           </div>
         </div>
 
+        {/* Act 2 — Scenes 2+3: every task starts with intent; intent needs context. */}
         <div
           ref={(el) => {
             actRefs.current[2] = el;
@@ -179,10 +198,39 @@ export function StoryDesktop() {
               }}
               className="mb-4 font-mono text-xs uppercase tracking-[0.3em] text-accent"
             >
+              {t("intent.eyebrow")}
+            </p>
+            <h2 className="font-display text-3xl font-semibold leading-[1.1] text-zinc-50 sm:text-5xl">
+              {t("intent.titleLine1")}
+              <br />
+              <span className="text-accent">{t("intent.titleLine2")}</span>
+            </h2>
+            <p className="mt-6 text-lg text-zinc-400">{t("intent.body")}</p>
+          </div>
+        </div>
+
+        {/* Act 3 — Scenes 4-7: context selects capabilities, capabilities become
+            action, action needs validation, failure becomes memory — the five
+            layers below are those four beats compressed into one pipeline. */}
+        <div
+          ref={(el) => {
+            actRefs.current[3] = el;
+          }}
+          className="absolute inset-0 z-10 flex items-center px-6 opacity-0 will-change-[opacity,transform] sm:px-12"
+        >
+          <div className="max-w-2xl">
+            <p
+              ref={(el) => {
+                eyebrowRefs.current[3] = el;
+              }}
+              className="mb-4 font-mono text-xs uppercase tracking-[0.3em] text-accent"
+            >
               {t("whatIsIt.eyebrow")}
             </p>
-            <h2 className="font-display text-3xl font-semibold text-zinc-50 sm:text-5xl">
-              {t("whatIsIt.title")}
+            <h2 className="font-display text-3xl font-semibold leading-[1.1] text-zinc-50 sm:text-5xl">
+              {t("whatIsIt.titleLine1")}
+              <br />
+              <span className="text-accent">{t("whatIsIt.titleLine2")}</span>
             </h2>
             <p className="mt-5 text-lg text-zinc-400">{t("whatIsIt.body")}</p>
             <ol className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-2">
@@ -201,6 +249,49 @@ export function StoryDesktop() {
                 </li>
               ))}
             </ol>
+          </div>
+        </div>
+
+        {/* Act 4 — Scene 8: every failure becomes memory, the system evolves. */}
+        <div
+          ref={(el) => {
+            actRefs.current[4] = el;
+          }}
+          className="absolute inset-0 z-10 flex items-center px-6 opacity-0 will-change-[opacity,transform] sm:px-12"
+        >
+          <div className="max-w-2xl">
+            <p
+              ref={(el) => {
+                eyebrowRefs.current[4] = el;
+              }}
+              className="mb-4 font-mono text-xs uppercase tracking-[0.3em] text-accent"
+            >
+              {t("evolution.eyebrow")}
+            </p>
+            <h2 className="font-display text-3xl font-semibold leading-[1.1] text-zinc-50 sm:text-5xl">
+              {t("evolution.titleLine1")}
+              <br />
+              <span className="text-accent">{t("evolution.titleLine2")}</span>
+            </h2>
+            <p className="mt-6 text-lg text-zinc-400">{t("evolution.body")}</p>
+            <div className="mt-9 flex flex-wrap gap-4">
+              <Magnetic>
+                <a
+                  href="#agents"
+                  className="rounded-full bg-zinc-50 px-6 py-3 text-sm font-medium text-zinc-950 transition hover:bg-accent"
+                >
+                  {t("evolution.ctaPrimary")}
+                </a>
+              </Magnetic>
+              <Magnetic>
+                <a
+                  href="#install"
+                  className="rounded-full border border-zinc-700 px-6 py-3 text-sm font-medium text-zinc-100 transition hover:border-zinc-400"
+                >
+                  {t("evolution.ctaSecondary")}
+                </a>
+              </Magnetic>
+            </div>
           </div>
         </div>
       </div>

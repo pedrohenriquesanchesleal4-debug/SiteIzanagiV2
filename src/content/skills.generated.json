@@ -1,0 +1,981 @@
+[
+  {
+    "slug": "accessibility-reviewer",
+    "name": "accessibility-reviewer",
+    "description": "Audita acessibilidade WCAG 2.2 AA/AAA: contraste, navegação por teclado, ARIA e leitores de tela. Use ao revisar componentes ou páginas antes de merge/deploy.",
+    "category": "testing-qa",
+    "dependencies": [
+      "animation-web",
+      "anti-ai-slop",
+      "design-directions",
+      "frontend",
+      "motion-design",
+      "qa"
+    ]
+  },
+  {
+    "slug": "adversarial-critique",
+    "name": "adversarial-critique",
+    "description": "Crítica adversarial de implementações: caça bugs, falhas de segurança, arquitetura e edge cases, com veredicto READY/READY_WITH_FIXES/NOT_READY. Use após qualquer implementação e antes da avaliação final.",
+    "category": "security",
+    "dependencies": [
+      "evaluation",
+      "failure-patterns",
+      "handoff-protocol",
+      "memoria-projeto",
+      "qa"
+    ]
+  },
+  {
+    "slug": "agentic-coding",
+    "name": "agentic-coding",
+    "description": "Loop de codificação autônoma (planejar, codar, testar, corrigir) com verificação empírica obrigatória e tentativas limitadas. Use ao implementar features ou corrigir falhas de build/teste.",
+    "category": "testing-qa"
+  },
+  {
+    "slug": "ai-agent",
+    "name": "ai-agent",
+    "description": "Padrões de integração com LLMs, RAG, vector databases, LangGraph, MCP e multi-agent systems. Use ao implementar ou revisar funcionalidades baseadas em IA generativa.",
+    "category": "database",
+    "dependencies": [
+      "observability-expert",
+      "prompt-engineering"
+    ]
+  },
+  {
+    "slug": "alternative-solution-generator",
+    "name": "alternative-solution-generator",
+    "description": "Gera múltiplas opções de solução com prós, contras e esforço estimado para um problema técnico. Use quando precisar comparar abordagens antes de decidir a implementação.",
+    "category": "misc"
+  },
+  {
+    "slug": "animation-web",
+    "name": "animation-web",
+    "description": "Scrollytelling, scroll-driven animations, sequências de imagem em canvas (estilo Apple), parallax e pinned sections. Use quando o site não deve parecer estático e o scroll for a timeline da experiência.",
+    "category": "frontend",
+    "dependencies": [
+      "accessibility-reviewer",
+      "anti-ai-slop",
+      "design-directions",
+      "frontend",
+      "motion-design",
+      "qa"
+    ]
+  },
+  {
+    "slug": "anti-ai-slop",
+    "name": "anti-ai-slop",
+    "description": "Detecta e corrige design 'cara de IA' (Inter default, gradiente roxo-azul, hero + 3 cards, glassmorphism genérico) com tipografia, cor e layout intencionais. Use ao revisar qualquer UI antes de entregar.",
+    "category": "frontend",
+    "dependencies": [
+      "accessibility-reviewer",
+      "animation-web",
+      "design-directions",
+      "frontend",
+      "memoria-projeto",
+      "motion-design"
+    ]
+  },
+  {
+    "slug": "api-automation",
+    "name": "api-automation",
+    "description": "Integração via API REST/HTTP: autenticação, paginação, rate limits, retries com backoff e validação de schema com httpx/pydantic. Use para integrar sistemas via API de forma confiável e idempotente.",
+    "category": "database"
+  },
+  {
+    "slug": "architecture-patterns",
+    "name": "architecture-patterns",
+    "description": "Padrões arquiteturais (Clean Architecture, Hexagonal, DDD, CQRS, Event-Driven, Microservices) com matriz de decisão, trade-offs e template de ADR. Use ao projetar ou refatorar a arquitetura do sistema.",
+    "category": "architecture"
+  },
+  {
+    "slug": "automation-documentation",
+    "name": "automation-documentation",
+    "description": "Gera README de automações: instalação, configuração (.env), execução com dry-run, testes, limitações e troubleshooting. Use em toda automação entregue, para que outra pessoa consiga executar e manter.",
+    "category": "testing-qa"
+  },
+  {
+    "slug": "automation-engineer",
+    "name": "automation-engineer",
+    "description": "Projeta sistemas de automação confiáveis: decompõe o processo, escolhe a stack, implementa com validação, idempotência, retries e testes. Use para automatizar planilhas, APIs, browser, ETL ou integrações.",
+    "category": "testing-qa"
+  },
+  {
+    "slug": "automation-optimization",
+    "name": "automation-optimization",
+    "description": "Identifica e corrige gargalos de I/O, browser, processamento e memória em automações, com métricas antes/depois. Use quando uma automação demorar demais, estourar rate limits ou custar caro.",
+    "category": "misc"
+  },
+  {
+    "slug": "automation-planning",
+    "name": "automation-planning",
+    "description": "Planeja automações antes de codar: escopo, entradas/saídas, critérios de sucesso mensuráveis e riscos em 1 página. Use no início de qualquer tarefa de automação, antes de escrever código.",
+    "category": "misc"
+  },
+  {
+    "slug": "automation-research",
+    "name": "automation-research",
+    "description": "Pesquisa documentação oficial, bibliotecas e projetos similares antes de implementar uma automação com padrão conhecido. Use antes de codar integrações, ETL, scraping ou automação de browser.",
+    "category": "documentation"
+  },
+  {
+    "slug": "automation-security",
+    "name": "automation-security",
+    "description": "Protege credenciais e dados sensíveis em automações: .env fora do Git, secret managers, menor privilégio e sanitização de logs (LGPD/GDPR). Use em toda automação que toque credenciais, APIs ou dados pessoais.",
+    "category": "security"
+  },
+  {
+    "slug": "brainstorming",
+    "name": "brainstorming",
+    "description": "Transforma uma ideia bruta em design aprovado por entrevista dirigida (~15 perguntas), referências e blueprint de arquitetura. Use antes de criar features ou componentes — hard-gate até o design ser aprovado.",
+    "category": "frontend",
+    "dependencies": [
+      "deep-research",
+      "requirement-analyzer",
+      "risk-analyzer",
+      "task-planner",
+      "tradeoff-analyzer",
+      "ui-ux-pro-max"
+    ]
+  },
+  {
+    "slug": "breaking-change-detector",
+    "name": "breaking-change-detector",
+    "description": "Detecta breaking changes em APIs e migrações de banco, classificando por semver (major/minor/patch) com estratégia de migração segura. Use antes de publicar mudanças em contratos de API ou schema de banco.",
+    "category": "database",
+    "dependencies": [
+      "clean-code-validator",
+      "complexity-analyzer",
+      "refactoring-specialist",
+      "software-architect",
+      "solid-validator",
+      "tdd"
+    ]
+  },
+  {
+    "slug": "browser-automation",
+    "name": "browser-automation",
+    "description": "Automação de navegador com Playwright: navegação, formulários, upload/download, extração de tabelas e seletores resilientes. Use quando não existir API e a automação web for necessária.",
+    "category": "testing-qa"
+  },
+  {
+    "slug": "bug-hunter",
+    "name": "bug-hunter",
+    "description": "Investiga bugs com protocolo disciplinado: reproduzir, isolar, entender a causa raiz, corrigir e verificar com teste de regressão. Use ao investigar erros, exceções ou comportamento inesperado.",
+    "category": "testing-qa",
+    "dependencies": [
+      "code-auditor",
+      "memoria-projeto",
+      "qa",
+      "root-cause-analyzer",
+      "security-privacy",
+      "self-correction"
+    ]
+  },
+  {
+    "slug": "bug-prevention",
+    "name": "bug-prevention",
+    "description": "Analisa código antes de bugs acontecerem: tipagem estrita, análise estática, testes e checklist de revisão para classes inteiras de bugs. Use ao revisar código para prevenir bugs recorrentes.",
+    "category": "testing-qa"
+  },
+  {
+    "slug": "caveman",
+    "name": "caveman",
+    "description": "Ultra-compressed communication mode. Cuts output tokens 65% (measured) by speaking like caveman while keeping full technical accuracy. Supports intensity levels: lite, full (default), ultra, wenyan-lite, wenyan-full, wenyan-ultra. Use when user says \"caveman mode\", \"talk like caveman\", \"use caveman\", \"less tokens\", \"be brief\", or invokes /caveman. Also auto-triggers when token efficiency is requested.",
+    "category": "misc"
+  },
+  {
+    "slug": "chaos-engineering",
+    "name": "chaos-engineering",
+    "description": "Planeja e executa experimentos de resiliência (pod kill, latência de rede, stress de CPU/memória) com hipótese, blast radius controlado e game days. Use antes de validar a resiliência do sistema em produção.",
+    "category": "misc"
+  },
+  {
+    "slug": "clean-code-validator",
+    "name": "clean-code-validator",
+    "description": "Revisa código contra princípios de clean code — nomes, funções pequenas, efeitos colaterais, tratamento de erro — e gera relatório de violações com fix sugerido. Use após escrever ou refatorar código.",
+    "category": "misc",
+    "dependencies": [
+      "breaking-change-detector",
+      "complexity-analyzer",
+      "refactoring-specialist",
+      "software-architect",
+      "solid-validator",
+      "tdd"
+    ]
+  },
+  {
+    "slug": "cloud-infra",
+    "name": "cloud-infra",
+    "description": "Guia de infraestrutura cloud (AWS/GCP/Azure), Terraform/IaC, Docker, Kubernetes e CI/CD com boas práticas de segurança. Use para projetar, implantar ou revisar infraestrutura cloud.",
+    "category": "security",
+    "dependencies": [
+      "iac-terraform",
+      "logging-expert",
+      "observability-expert",
+      "serverless-edge",
+      "sre-reliability"
+    ]
+  },
+  {
+    "slug": "code-auditor",
+    "name": "code-auditor",
+    "description": "Audita código contra OWASP Top 10, segredos hardcoded, leaks de recursos e concorrência insegura, com relatório por severidade, arquivo+linha e fix antes/depois. Use antes de merge/deploy.",
+    "category": "security",
+    "dependencies": [
+      "bug-hunter",
+      "qa",
+      "security-privacy"
+    ]
+  },
+  {
+    "slug": "complexity-analyzer",
+    "name": "complexity-analyzer",
+    "description": "Mede complexidade ciclomática (McCabe) e cognitiva do código, sinaliza funções acima do limite e recomenda extração/refatoração. Use ao revisar funções grandes ou muito aninhadas.",
+    "category": "misc",
+    "dependencies": [
+      "breaking-change-detector",
+      "clean-code-validator",
+      "refactoring-specialist",
+      "software-architect",
+      "solid-validator",
+      "tdd"
+    ]
+  },
+  {
+    "slug": "confidence-estimator",
+    "name": "confidence-estimator",
+    "description": "Calibra o grau de certeza (alto/médio/baixo) em recomendações e código, sinalizando suposições para evitar alucinações apresentadas como fato. Use em decisões arquiteturais ou respostas ambíguas.",
+    "category": "architecture",
+    "dependencies": [
+      "deep-research",
+      "documentation-writer",
+      "hallucination-detection",
+      "memoria-projeto"
+    ]
+  },
+  {
+    "slug": "continuous-improvement",
+    "name": "continuous-improvement",
+    "description": "Reflete sobre um ciclo de trabalho concluído, extrai aprendizados e atualiza a memória persistente do projeto (.agents/memoria/). Use ao encerrar sprints, marcos ou após resolver bugs complexos.",
+    "category": "misc"
+  },
+  {
+    "slug": "cto-advisor",
+    "name": "cto-advisor",
+    "description": "Aconselha decisões técnicas estratégicas (build vs buy, roadmap, estrutura de times, risco, orçamento) traduzindo trade-offs técnicos para stakeholders de negócio. Use em decisões de nível executivo.",
+    "category": "misc"
+  },
+  {
+    "slug": "data-engineering",
+    "name": "data-engineering",
+    "description": "Guia de modelagem de dados, NoSQL, message queues, streaming e pipelines ETL com boas práticas de schema, idempotência e monitoramento. Use para projetar pipelines de dados ou sistemas de armazenamento.",
+    "category": "database",
+    "dependencies": [
+      "iac-terraform",
+      "observability-expert"
+    ]
+  },
+  {
+    "slug": "data-validation",
+    "name": "data-validation",
+    "description": "Valida dados antes de enviar a qualquer destino (API, banco, planilha): schemas, formatos, duplicados e relatório de qualidade por erro. Use antes de importar ou sincronizar dados para evitar lote inválido.",
+    "category": "database"
+  },
+  {
+    "slug": "debug-specialist",
+    "name": "debug-specialist",
+    "description": "Protocolo de primeira resposta a erros: captura contexto, reproduz, isola a causa e descarta causas comuns (cache, config, ambiente) antes de escalar. Use ao investigar um erro, stack trace ou bug reportado.",
+    "category": "misc"
+  },
+  {
+    "slug": "deep-research",
+    "name": "deep-research",
+    "description": "Pesquisa multi-fonte na web: plano de busca, execução de queries, síntese e relatório com fontes citadas e nível de confiança. Use antes de decidir stack, referências visuais, preços ou concorrentes.",
+    "category": "misc",
+    "dependencies": [
+      "brainstorming",
+      "confidence-estimator",
+      "documentation-writer",
+      "hallucination-detection",
+      "memoria-projeto",
+      "requirement-analyzer"
+    ]
+  },
+  {
+    "slug": "defense-in-depth",
+    "name": "defense-in-depth",
+    "description": "Projeta segurança em camadas independentes (rate limit, validação de entrada, autorização, persistência segura) para que a falha de uma não comprometa o sistema. Use em auth, APIs públicas ou dados sensíveis.",
+    "category": "security"
+  },
+  {
+    "slug": "dependency-analyzer",
+    "name": "dependency-analyzer",
+    "description": "Audita dependências por vulnerabilidades conhecidas (CVE), versões desatualizadas, conflitos e compliance de licença, com plano de ação priorizado. Use antes de atualizar pacotes ou revisar segurança de terceiros.",
+    "category": "security"
+  },
+  {
+    "slug": "design-directions",
+    "name": "design-directions",
+    "description": "Apresenta 3-5 direções de design distintas e bespoke por nicho (paleta, tipografia, layout e motion signature) antes de qualquer código visual. Use ao iniciar um site, landing, dashboard ou produto visual novo.",
+    "category": "frontend",
+    "dependencies": [
+      "accessibility-reviewer",
+      "animation-web",
+      "anti-ai-slop",
+      "frontend",
+      "memoria-projeto",
+      "motion-design"
+    ]
+  },
+  {
+    "slug": "design-pattern-advisor",
+    "name": "design-pattern-advisor",
+    "description": "Recomenda o padrão de projeto certo para um problema (Factory, Strategy, Decorator, Repository...) com trade-offs e alerta contra over-engineering. Use ao decidir como estruturar uma solução de código.",
+    "category": "misc"
+  },
+  {
+    "slug": "documentation-writer",
+    "name": "documentation-writer",
+    "description": "Gera documentação de projeto — README, docs de API, guias de setup, arquitetura e contribuição — em templates prontos. Use ao documentar um projeto novo ou atualizar sua documentação existente.",
+    "category": "architecture",
+    "dependencies": [
+      "confidence-estimator",
+      "deep-research",
+      "hallucination-detection",
+      "memoria-projeto"
+    ]
+  },
+  {
+    "slug": "dry-kiss-yagni-validator",
+    "name": "dry-kiss-yagni-validator",
+    "description": "Verifica código contra DRY, KISS e YAGNI: duplicação, over-engineering e abstrações/parâmetros não usados, com exemplos de antes/depois. Use ao revisar ou refatorar código para simplicidade.",
+    "category": "misc"
+  },
+  {
+    "slug": "economia-tokens",
+    "name": "economia-tokens",
+    "description": "Engenharia de contexto para reduzir consumo de tokens sem perder profundidade: leitura direcionada (grep-first), cache de prompt, higiene de contexto e edição em diff. Use sempre, em toda tarefa, por padrão.",
+    "category": "ai-agent"
+  },
+  {
+    "slug": "er-diagram-builder",
+    "name": "er-diagram-builder",
+    "description": "Gera diagramas entidade-relacionamento (PlantUML, Mermaid) a partir de definições de schema ou descrição do domínio. Use ao documentar ou revisar a modelagem de um banco de dados.",
+    "category": "database"
+  },
+  {
+    "slug": "error-recovery",
+    "name": "error-recovery",
+    "description": "Torna automações resilientes a falhas: classifica erros (recuperável/permanente/crítico), aplica retry com backoff e checkpoints para retomar sem duplicar. Use em automações que processam lotes ou chamam APIs instáveis.",
+    "category": "misc"
+  },
+  {
+    "slug": "evaluation",
+    "name": "evaluation",
+    "description": "Avalia entregas de agentes por métricas ponderadas (corretude, cobertura, testes, arquitetura, segurança) com veredito PASS/FAIL, regressões e recomendações. Use antes de declarar qualquer entrega concluída.",
+    "category": "testing-qa",
+    "dependencies": [
+      "adversarial-critique",
+      "failure-patterns",
+      "handoff-protocol",
+      "memoria-projeto",
+      "qa"
+    ]
+  },
+  {
+    "slug": "failure-patterns",
+    "name": "failure-patterns",
+    "description": "Registra padrões de falhas recorrentes (sintoma, causa raiz, solução, confiança) para aplicar correção guiada. Use ao encontrar um erro novo, resolver um bug difícil ou detectar recorrência.",
+    "category": "misc",
+    "dependencies": [
+      "adversarial-critique",
+      "evaluation",
+      "handoff-protocol",
+      "memoria-projeto",
+      "qa"
+    ]
+  },
+  {
+    "slug": "feature-flags",
+    "name": "feature-flags",
+    "description": "Estratégias de feature flags, rollout gradual, canary releases e A/B testing (LaunchDarkly, Statsig, Harness FME, Flagsmith). Use ao implementar entregas graduais ou experimentos A/B.",
+    "category": "testing-qa"
+  },
+  {
+    "slug": "frontend",
+    "name": "frontend",
+    "description": "Design tokens do Tailwind e padrões de UI de alto craft do projeto, com boas práticas de Next.js. Use ao criar ou editar componentes visuais para manter consistência com o design system.",
+    "category": "frontend",
+    "dependencies": [
+      "accessibility-reviewer",
+      "animation-web",
+      "anti-ai-slop",
+      "design-directions",
+      "graphql",
+      "memoria-projeto"
+    ]
+  },
+  {
+    "slug": "graphql",
+    "name": "graphql",
+    "description": "Padrões de schema, resolvers, Apollo Client/Server, DataLoader, caching e segurança em GraphQL. Use ao implementar ou revisar APIs GraphQL.",
+    "category": "security",
+    "dependencies": [
+      "frontend",
+      "logging-expert",
+      "mobile-dev",
+      "qa",
+      "software-architect",
+      "ui-ux-pro-max"
+    ]
+  },
+  {
+    "slug": "hallucination-detection",
+    "name": "hallucination-detection",
+    "description": "Detecta alucinações técnicas em código gerado — APIs inexistentes, imports inventados, versões descasadas — cruzando com o repositório real. Use ao revisar código gerado por IA ou depurar erros misteriosos.",
+    "category": "ai-agent",
+    "dependencies": [
+      "confidence-estimator",
+      "deep-research",
+      "documentation-writer",
+      "memoria-projeto"
+    ]
+  },
+  {
+    "slug": "handoff-protocol",
+    "name": "handoff-protocol",
+    "description": "Protocolo de handoff estruturado entre agentes (motivo, contexto mínimo, artefatos, decisões, questões em aberto). Use em toda transição de agente dentro de um execution graph ou swarm.",
+    "category": "ai-agent",
+    "dependencies": [
+      "adversarial-critique",
+      "evaluation",
+      "failure-patterns",
+      "memoria-projeto",
+      "qa"
+    ]
+  },
+  {
+    "slug": "handoff-sessao",
+    "name": "handoff-sessao",
+    "description": "Grava um resumo curto do estado da tarefa em andamento para retomar na próxima sessão sem perder contexto. Use quando o usuário disser 'pausa'/'continuo depois' ou a conversa estiver perto do limite de contexto.",
+    "category": "misc"
+  },
+  {
+    "slug": "i18n-l10n",
+    "name": "i18n-l10n",
+    "description": "Padrões de i18n/l10n com next-intl, react-intl, locale routing e formatação de datas/números/moeda. Use ao internacionalizar ou traduzir uma aplicação Next.js.",
+    "category": "frontend"
+  },
+  {
+    "slug": "iac-terraform",
+    "name": "iac-terraform",
+    "description": "Padrões de Infrastructure as Code com Terraform/OpenTofu: módulos, remote state, workspaces e provisionamento multi-cloud. Use ao criar ou revisar infraestrutura como código.",
+    "category": "devops",
+    "dependencies": [
+      "cloud-infra",
+      "data-engineering",
+      "logging-expert",
+      "observability-expert",
+      "serverless-edge",
+      "sre-reliability"
+    ]
+  },
+  {
+    "slug": "legacy-migration",
+    "name": "legacy-migration",
+    "description": "Estratégias de migração de sistemas legados (strangler fig, big bang, parallel run) e extração de dados de sistemas antigos. Use ao migrar funcionalidades para uma nova plataforma.",
+    "category": "database"
+  },
+  {
+    "slug": "logging-expert",
+    "name": "logging-expert",
+    "description": "Define logging estruturado em JSON com contexto, sem vazar dados sensíveis, e o que registrar em cada nível (info/warning/error/critical). Use ao implementar ou revisar logging de uma aplicação.",
+    "category": "devops",
+    "dependencies": [
+      "cloud-infra",
+      "graphql",
+      "iac-terraform",
+      "observability-expert",
+      "qa",
+      "serverless-edge"
+    ]
+  },
+  {
+    "slug": "mcp-server-dev",
+    "name": "mcp-server-dev",
+    "description": "Desenvolvimento de servidores MCP: tools com schema Zod, resources, prompts, transportes STDIO/HTTP e sanitização contra path-traversal e command injection. Use ao criar ou estender servidores MCP.",
+    "category": "database"
+  },
+  {
+    "slug": "memoria-projeto",
+    "name": "memoria-projeto",
+    "description": "Mantém memória persistente do projeto entre sessões (decisões, padrões, erros resolvidos). Use no início de uma tarefa para ler o histórico e no final para registrar o que foi aprendido.",
+    "category": "misc",
+    "dependencies": [
+      "adversarial-critique",
+      "anti-ai-slop",
+      "bug-hunter",
+      "confidence-estimator",
+      "deep-research",
+      "design-directions"
+    ]
+  },
+  {
+    "slug": "mobile-dev",
+    "name": "mobile-dev",
+    "description": "Padrões de desenvolvimento mobile com React Native/Expo, Flutter e PWA, incluindo diretrizes de design iOS/Material. Use ao desenvolver ou revisar aplicações mobile.",
+    "category": "frontend",
+    "dependencies": [
+      "frontend",
+      "graphql",
+      "qa",
+      "ui-ux-pro-max",
+      "web-perf-seo"
+    ]
+  },
+  {
+    "slug": "monitoring-specialist",
+    "name": "monitoring-specialist",
+    "description": "Define métricas essenciais, SLIs/SLOs/SLAs e alertas acionáveis para produção. Use ao configurar monitoramento de sistemas ou planejar confiabilidade.",
+    "category": "devops"
+  },
+  {
+    "slug": "motion-design",
+    "name": "motion-design",
+    "description": "Escolha e uso de bibliotecas de animação web (GSAP, Motion, Anime.js, Lottie, CSS scroll-driven, Number Flow). Use ao implementar micro-interações, scroll animations ou motion design de UI.",
+    "category": "frontend",
+    "dependencies": [
+      "accessibility-reviewer",
+      "animation-web",
+      "anti-ai-slop",
+      "design-directions",
+      "frontend",
+      "qa"
+    ]
+  },
+  {
+    "slug": "observability-expert",
+    "name": "observability-expert",
+    "description": "Instrumentação com OpenTelemetry, logs estruturados e correlação por trace_id/span_id para achar causa raiz em microsserviços. Use ao instrumentar sistemas distribuídos ou debugar produção.",
+    "category": "devops",
+    "dependencies": [
+      "ai-agent",
+      "cloud-infra",
+      "data-engineering",
+      "iac-terraform",
+      "logging-expert",
+      "prompt-engineering"
+    ]
+  },
+  {
+    "slug": "parallel-agents",
+    "name": "parallel-agents",
+    "description": "Orquestra agentes em paralelo (fan-out/swarm): decompõe tarefas complexas em frentes independentes e agrega resultados por artefatos em disco. Use em pedidos complexos ou multi-domínio.",
+    "category": "ai-agent",
+    "dependencies": [
+      "anti-ai-slop",
+      "design-directions",
+      "frontend",
+      "memoria-projeto",
+      "professor-modo",
+      "qa"
+    ]
+  },
+  {
+    "slug": "performance-optimizer",
+    "name": "performance-optimizer",
+    "description": "Identifica gargalos de performance (DB, app, rede, frontend), mede antes/depois e aplica otimizações direcionadas. Use ao investigar lentidão ou antes de deploy para checar regressões.",
+    "category": "devops"
+  },
+  {
+    "slug": "principal-engineer",
+    "name": "principal-engineer",
+    "description": "Governança técnica de longo prazo: define padrões organizacionais, arquiteturas de referência e ADRs para decisões de alto impacto. Use em mudanças de stack ou dilemas arquiteturais complexos.",
+    "category": "architecture"
+  },
+  {
+    "slug": "professor-modo",
+    "name": "professor-modo",
+    "description": "Depois de alterar código, explica em poucas linhas o que foi feito e ensina um conceito relacionado, nível dev júnior. Use quando pedirem para explicar/ensinar ou o modo professor estiver ativo.",
+    "category": "misc",
+    "dependencies": [
+      "memoria-projeto",
+      "parallel-agents"
+    ]
+  },
+  {
+    "slug": "project-manager",
+    "name": "project-manager",
+    "description": "Use para planejar sprints, definir milestones, acompanhar velocidade e burndown, e reportar progresso e riscos a stakeholders.",
+    "category": "misc"
+  },
+  {
+    "slug": "prompt-engineering",
+    "name": "prompt-engineering",
+    "description": "Use ao projetar ou revisar prompts de sistema, few-shot, formato de saída estrito e proteção contra prompt injection.",
+    "category": "ai-agent",
+    "dependencies": [
+      "ai-agent",
+      "observability-expert"
+    ]
+  },
+  {
+    "slug": "qa",
+    "name": "qa",
+    "description": "Use para auditar código antes de merge/deploy: TypeScript estrito, React, performance, acessibilidade WCAG, responsividade, segurança, SEO e pirâmide de testes.",
+    "category": "testing-qa",
+    "dependencies": [
+      "accessibility-reviewer",
+      "adversarial-critique",
+      "animation-web",
+      "anti-ai-slop",
+      "bug-hunter",
+      "code-auditor"
+    ]
+  },
+  {
+    "slug": "readme-generator",
+    "name": "readme-generator",
+    "description": "Use ao criar ou reescrever o README de um repositório: extrai stack real, badges, instalação, uso, testes, deploy e contribuição.",
+    "category": "testing-qa"
+  },
+  {
+    "slug": "refactoring-specialist",
+    "name": "refactoring-specialist",
+    "description": "Use para refatorar código sem alterar comportamento: catálogo de code smells, técnicas como Extract Method e checklist de segurança com testes.",
+    "category": "testing-qa",
+    "dependencies": [
+      "breaking-change-detector",
+      "clean-code-validator",
+      "complexity-analyzer",
+      "software-architect",
+      "solid-validator",
+      "tdd"
+    ]
+  },
+  {
+    "slug": "release-planner",
+    "name": "release-planner",
+    "description": "Use para planejar releases: versionamento semântico, checklist de release, changelog e coordenação de deploy.",
+    "category": "devops"
+  },
+  {
+    "slug": "requirement-analyzer",
+    "name": "requirement-analyzer",
+    "description": "Use ao receber requisitos vagos ou iniciar um épico: decompõe em requisitos funcionais/não-funcionais e critérios de aceite BDD.",
+    "category": "misc",
+    "dependencies": [
+      "brainstorming",
+      "deep-research",
+      "risk-analyzer",
+      "task-planner",
+      "tradeoff-analyzer",
+      "ui-ux-pro-max"
+    ]
+  },
+  {
+    "slug": "risk-analyzer",
+    "name": "risk-analyzer",
+    "description": "Use para identificar, avaliar e mitigar riscos de projeto e técnicos antes que se materializem, com matriz de probabilidade x impacto.",
+    "category": "misc",
+    "dependencies": [
+      "brainstorming",
+      "deep-research",
+      "requirement-analyzer",
+      "task-planner",
+      "tradeoff-analyzer",
+      "ui-ux-pro-max"
+    ]
+  },
+  {
+    "slug": "root-cause-analyzer",
+    "name": "root-cause-analyzer",
+    "description": "Use após corrigir um bug para investigar a causa raiz sistêmica (5 Whys, Fishbone, Premortem) e recomendar mudanças de processo.",
+    "category": "misc",
+    "dependencies": [
+      "bug-hunter",
+      "memoria-projeto",
+      "self-correction",
+      "systematic-debugging",
+      "tdd"
+    ]
+  },
+  {
+    "slug": "scalability-expert",
+    "name": "scalability-expert",
+    "description": "Use para projetar escalabilidade horizontal, cache, sharding de banco e pipelines assíncronos antes que o sistema degrade sob carga.",
+    "category": "devops"
+  },
+  {
+    "slug": "security-privacy",
+    "name": "security-privacy",
+    "description": "Use ao implementar autenticação, autorização, validação de input ou revisar código quanto a segurança: OWASP Top 10, LGPD/GDPR e hardening de APIs.",
+    "category": "security",
+    "dependencies": [
+      "bug-hunter",
+      "code-auditor",
+      "qa"
+    ]
+  },
+  {
+    "slug": "self-correction",
+    "name": "self-correction",
+    "description": "Use ao notar erro de build, teste falhando ou desvio de regra do projeto: isola a causa, aplica correção cirúrgica e registra o aprendizado.",
+    "category": "testing-qa",
+    "dependencies": [
+      "bug-hunter",
+      "memoria-projeto",
+      "root-cause-analyzer",
+      "systematic-debugging",
+      "tdd"
+    ]
+  },
+  {
+    "slug": "self-critique",
+    "name": "self-critique",
+    "description": "Use antes de finalizar qualquer entrega complexa: aplica os 5 quality gates (stubs, segurança, craft, verificação, concisão) como auto-revisão.",
+    "category": "security"
+  },
+  {
+    "slug": "senior-code-reviewer",
+    "name": "senior-code-reviewer",
+    "description": "Use para revisar código como um engenheiro sênior: corretude, segurança, performance, manutenibilidade e testabilidade com veredito e fixes acionáveis.",
+    "category": "testing-qa"
+  },
+  {
+    "slug": "sequence-diagram-builder",
+    "name": "sequence-diagram-builder",
+    "description": "Use para documentar fluxos assíncronos, chamadas de API, autenticação ou integrações entre serviços com diagramas de sequência em Mermaid.js.",
+    "category": "documentation"
+  },
+  {
+    "slug": "serverless-edge",
+    "name": "serverless-edge",
+    "description": "Use para implementar funções serverless ou edge (Vercel, AWS Lambda, Cloudflare Workers): padrões, cold start e caching no edge.",
+    "category": "misc",
+    "dependencies": [
+      "cloud-infra",
+      "iac-terraform",
+      "logging-expert",
+      "observability-expert",
+      "sre-reliability"
+    ]
+  },
+  {
+    "slug": "software-architect",
+    "name": "software-architect",
+    "description": "Use antes de escrever código em projetos novos, features complexas ou refactors: define padrão de arquitetura, componentes, riscos e plano de implementação.",
+    "category": "frontend",
+    "dependencies": [
+      "anti-ai-slop",
+      "breaking-change-detector",
+      "clean-code-validator",
+      "complexity-analyzer",
+      "design-directions",
+      "frontend"
+    ]
+  },
+  {
+    "slug": "solid-validator",
+    "name": "solid-validator",
+    "description": "Use após criar uma classe ou antes de refatorar para validar aderência aos 5 princípios SOLID, com violações e sugestões de correção.",
+    "category": "misc",
+    "dependencies": [
+      "breaking-change-detector",
+      "clean-code-validator",
+      "complexity-analyzer",
+      "refactoring-specialist",
+      "software-architect",
+      "tdd"
+    ]
+  },
+  {
+    "slug": "spreadsheet-automation",
+    "name": "spreadsheet-automation",
+    "description": "Use para automatizar planilhas (Excel, CSV, ODS, Google Sheets) como fonte ou destino de dados: leitura, validação, normalização e escrita sem perda de dados.",
+    "category": "misc"
+  },
+  {
+    "slug": "sre-reliability",
+    "name": "sre-reliability",
+    "description": "Use para definir SLIs/SLOs/SLAs, error budget, observabilidade, resposta a incidentes e capacity planning visando confiabilidade do sistema.",
+    "category": "devops",
+    "dependencies": [
+      "cloud-infra",
+      "iac-terraform",
+      "logging-expert",
+      "observability-expert",
+      "serverless-edge"
+    ]
+  },
+  {
+    "slug": "staff-engineer",
+    "name": "staff-engineer",
+    "description": "Use ao liderar iniciativas técnicas cross-team ou resolver débitos sistêmicos de grande escala que exigem alinhamento entre múltiplos times.",
+    "category": "misc"
+  },
+  {
+    "slug": "systematic-debugging",
+    "name": "systematic-debugging",
+    "description": "Depuração em 6 fases (reproduzir, isolar, hipótese, corrigir, verificar, prevenir) com causa raiz comprovada por evidência, nunca por chute. Use em qualquer erro, crash ou teste falhando, antes de qualquer correção.",
+    "category": "testing-qa",
+    "dependencies": [
+      "bug-hunter",
+      "memoria-projeto",
+      "root-cause-analyzer",
+      "self-correction",
+      "tdd"
+    ]
+  },
+  {
+    "slug": "task-planner",
+    "name": "task-planner",
+    "description": "Decompõe épicos em marcos, dependências e critérios de aceite mensuráveis. Use ao iniciar projetos complexos, features grandes ou refatorações profundas.",
+    "category": "misc",
+    "dependencies": [
+      "brainstorming",
+      "deep-research",
+      "requirement-analyzer",
+      "risk-analyzer",
+      "tradeoff-analyzer",
+      "ui-ux-pro-max"
+    ]
+  },
+  {
+    "slug": "tdd",
+    "name": "tdd",
+    "description": "Test-Driven Development com Iron Law: escreva o teste antes, veja falhar, código mínimo, refatore. Use em toda feature, bugfix ou refatoração antes de escrever código de implementação.",
+    "category": "testing-qa",
+    "dependencies": [
+      "breaking-change-detector",
+      "bug-hunter",
+      "clean-code-validator",
+      "complexity-analyzer",
+      "memoria-projeto",
+      "refactoring-specialist"
+    ]
+  },
+  {
+    "slug": "tech-lead",
+    "name": "tech-lead",
+    "description": "Code review pedagógico, desbloqueio de engenheiros e governança de padrões de qualidade no dia a dia. Use ao revisar PRs, guiar sprints ou liderar o time.",
+    "category": "misc"
+  },
+  {
+    "slug": "technical-debt-analyzer",
+    "name": "technical-debt-analyzer",
+    "description": "Identifica, quantifica e prioriza dívida técnica (código, design, testes, docs, infra, segurança) em um backlog priorizado por custo e impacto. Use ao planejar refatorações ou avaliar saúde técnica do projeto.",
+    "category": "testing-qa"
+  },
+  {
+    "slug": "technical-writer",
+    "name": "technical-writer",
+    "description": "Estrutura documentação técnica (arquitetura, APIs, manuais) pelo modelo Diátaxis, com diagramas como código. Use ao documentar sistemas, APIs ou arquiteturas.",
+    "category": "architecture"
+  },
+  {
+    "slug": "technology-selection",
+    "name": "technology-selection",
+    "description": "Escolhe stack de automação (linguagem, libs, API vs browser vs planilha vs CLI) com justificativa explícita registrada. Use antes de implementar qualquer automação nova.",
+    "category": "misc"
+  },
+  {
+    "slug": "testing-automation",
+    "name": "testing-automation",
+    "description": "Define testes de automação com pytest: unitários, integração com mock, E2E Playwright, dry-run e retomada por checkpoint. Use ao implementar qualquer automação, antes de rodar em produção.",
+    "category": "testing-qa"
+  },
+  {
+    "slug": "tradeoff-analyzer",
+    "name": "tradeoff-analyzer",
+    "description": "Compara abordagens técnicas por critérios ponderados (complexidade, manutenibilidade, performance, custo, risco) e gera recomendação estruturada. Use ao decidir entre arquiteturas, libs ou padrões concorrentes.",
+    "category": "architecture",
+    "dependencies": [
+      "brainstorming",
+      "deep-research",
+      "requirement-analyzer",
+      "risk-analyzer",
+      "task-planner",
+      "ui-ux-pro-max"
+    ]
+  },
+  {
+    "slug": "ui-ux-pro-max",
+    "name": "ui-ux-pro-max",
+    "description": "Motor de busca local (BM25) com estilos, paletas, tipografia, guidelines de UX e presets por stack para decisões de design. Use ao projetar páginas, componentes, cores, tipografia ou revisar UI.",
+    "category": "frontend",
+    "dependencies": [
+      "accessibility-reviewer",
+      "animation-web",
+      "anti-ai-slop",
+      "brainstorming",
+      "deep-research",
+      "design-directions"
+    ]
+  },
+  {
+    "slug": "uml-generator",
+    "name": "uml-generator",
+    "description": "Gera diagramas UML (classes, componentes, casos de uso, sequência) em PlantUML ou Mermaid a partir de uma descrição de arquitetura. Use ao documentar ou comunicar o design de um sistema.",
+    "category": "frontend"
+  },
+  {
+    "slug": "ux-reviewer",
+    "name": "ux-reviewer",
+    "description": "Avalia usabilidade de fluxos e telas pelas 10 heurísticas de Nielsen, classificando achados por severidade. Use ao revisar telas de conversão ou interfaces antes do release.",
+    "category": "frontend"
+  },
+  {
+    "slug": "wasm",
+    "name": "wasm",
+    "description": "Compila código para WebAssembly (Rust/AssemblyScript) e integra com JS para performance quase nativa no browser. Use ao implementar processamento pesado no client (imagem, áudio, cálculos, compressão).",
+    "category": "misc"
+  },
+  {
+    "slug": "web-forms",
+    "name": "web-forms",
+    "description": "Formulários de alto craft com Zod + React Hook Form: validação inline, wizards multi-step, auto-save e acessibilidade WCAG. Use ao construir checkouts, onboarding ou formulários complexos.",
+    "category": "testing-qa"
+  },
+  {
+    "slug": "web-perf-seo",
+    "name": "web-perf-seo",
+    "description": "Otimiza Core Web Vitals (LCP, CLS, INP), assets, cache e SEO on-page (meta tags, structured data) com metas de Lighthouse. Use ao criar páginas, otimizar performance ou auditar SEO.",
+    "category": "misc",
+    "dependencies": [
+      "accessibility-reviewer",
+      "animation-web",
+      "anti-ai-slop",
+      "design-directions",
+      "frontend",
+      "graphql"
+    ]
+  },
+  {
+    "slug": "webapp-testing",
+    "name": "webapp-testing",
+    "description": "Testa apps web locais com Playwright: scripts de verificação de UI, screenshots e logs do navegador. Use ao validar páginas, fluxos, formulários ou regressões visuais.",
+    "category": "testing-qa"
+  },
+  {
+    "slug": "webgl-3d",
+    "name": "webgl-3d",
+    "description": "Cenas 3D no navegador com Three.js/React Three Fiber, shaders GLSL, partículas, GLTF e scroll-driven 3D, com budget de performance. Use quando o pedido envolver 3D, WebGL, shader ou experiência imersiva.",
+    "category": "frontend",
+    "dependencies": [
+      "accessibility-reviewer",
+      "animation-web",
+      "anti-ai-slop",
+      "design-directions",
+      "frontend",
+      "motion-design"
+    ]
+  },
+  {
+    "slug": "websocket-realtime",
+    "name": "websocket-realtime",
+    "description": "Comunicação em tempo real via WebSocket, SSE, Socket.IO e WebRTC, com padrões de canais, escalabilidade e segurança. Use ao implementar chat, notificações push ou streaming ao vivo.",
+    "category": "security"
+  }
+]

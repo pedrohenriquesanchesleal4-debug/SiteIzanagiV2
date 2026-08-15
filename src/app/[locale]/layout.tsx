@@ -9,6 +9,7 @@ import { SmoothScrollProvider } from "@/lib/scroll";
 import { Nav } from "@/components/ui/Nav";
 import { Footer } from "@/components/ui/Footer";
 import { ChatWidget, ChatProvider } from "@/components/ui/ChatWidget";
+import { CommandPalette } from "@/components/ui/CommandPalette";
 import { GrainOverlay } from "@/components/ui/GrainOverlay";
 import "../globals.css";
 
@@ -71,6 +72,7 @@ export default async function LocaleLayout({
               <main id="main">{children}</main>
               <Footer />
               <ChatWidget />
+              <CommandPalette />
             </ChatProvider>
           </SmoothScrollProvider>
         </NextIntlClientProvider>

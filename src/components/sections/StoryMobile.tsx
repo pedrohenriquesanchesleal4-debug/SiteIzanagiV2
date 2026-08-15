@@ -1,9 +1,9 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { gsap } from "@/lib/scroll";
-import { LAYER_KEYS } from "@/content/agents";
+import { LAYER_KEYS, INSTALL_COMMAND } from "@/content/agents";
 
 /**
  * Mobile gets its own pace on purpose: no pinned/scrubbed canvas. A pinned
@@ -12,6 +12,36 @@ import { LAYER_KEYS } from "@/content/agents";
  * wordmark plays once on load, then everything is plain document flow with
  * lightweight enter-once reveals, so a swipe always visibly moves the page.
  */
+
+function InstallCommandLine() {
+  const t = useTranslations("install");
+  const [copied, setCopied] = useState(false);
+
+  return (
+    <button
+      type="button"
+      onClick={async () => {
+        try {
+          await navigator.clipboard.writeText(INSTALL_COMMAND);
+          setCopied(true);
+          setTimeout(() => setCopied(false), 1800);
+        } catch {
+          /* clipboard unavailable — no-op, the command is still selectable text */
+        }
+      }}
+      className="group flex w-full items-center justify-between gap-3 rounded-xl border border-zinc-700 bg-zinc-900/60 px-4 py-3.5 text-left transition active:border-zinc-400"
+    >
+      <code className="font-mono text-sm text-zinc-200">
+        <span className="select-none text-zinc-600">$ </span>
+        {INSTALL_COMMAND}
+      </code>
+      <span className="shrink-0 font-mono text-xs text-zinc-500 group-active:text-accent">
+        {copied ? t("copied") : t("copy")}
+      </span>
+    </button>
+  );
+}
+
 export function StoryMobile() {
   const t = useTranslations();
   const rootRef = useRef<HTMLDivElement>(null);
@@ -82,6 +112,7 @@ export function StoryMobile() {
 
   return (
     <div ref={rootRef} className="relative bg-zinc-950">
+      {/* Act 0 — Hero: cinematic boot. IZANAGI, then the pipeline it runs on. */}
       <section className="relative flex min-h-[100svh] flex-col justify-center overflow-hidden px-6 pb-16 pt-28">
         <div className="pointer-events-none absolute inset-x-0 top-0 flex flex-wrap gap-3 px-8 pt-8 opacity-70">
           {dots.map((_, i) => (
@@ -98,7 +129,7 @@ export function StoryMobile() {
           ref={(el) => {
             lineRefs.current[0] = el;
           }}
-          className="mb-4 font-mono text-xs uppercase tracking-[0.3em] text-accent"
+          className="mb-4 font-mono text-[11px] uppercase tracking-[0.2em] text-accent"
         >
           {t("hero.eyebrow")}
         </p>
@@ -140,40 +171,56 @@ export function StoryMobile() {
           ref={(el) => {
             lineRefs.current[5] = el;
           }}
-          className="mt-8 flex flex-wrap gap-3"
+          className="mt-8"
         >
-          <a
-            href="#agents"
-            className="rounded-full bg-zinc-50 px-5 py-3 text-sm font-medium text-zinc-950"
-          >
-            {t("hero.ctaPrimary")}
-          </a>
-          <a
-            href="#install"
-            className="rounded-full border border-zinc-700 px-5 py-3 text-sm font-medium text-zinc-100"
-          >
-            {t("hero.ctaSecondary")}
-          </a>
+          <InstallCommandLine />
         </div>
+        <p
+          ref={(el) => {
+            lineRefs.current[6] = el;
+          }}
+          className="mt-8 font-mono text-[11px] uppercase tracking-[0.3em] text-zinc-600"
+        >
+          {t("hero.scrollHint")}
+        </p>
       </section>
 
+      {/* Act 1 — Scene 1: an idea is easy, execution is not. */}
       <section data-reveal className="px-6 py-16">
         <p className="mb-3 font-mono text-xs uppercase tracking-[0.3em] text-accent">
           {t("problem.eyebrow")}
         </p>
-        <h2 className="font-display text-2xl font-semibold text-zinc-50">
-          {t("problem.title")}
+        <h2 className="font-display text-2xl font-semibold leading-tight text-zinc-50">
+          {t("problem.titleLine1")}
+          <br />
+          <span className="text-accent">{t("problem.titleLine2")}</span>
         </h2>
         <p className="mt-4 text-base text-zinc-400">{t("problem.body")}</p>
       </section>
 
+      {/* Act 2 — Scenes 2+3: every task starts with intent; intent needs context. */}
+      <section data-reveal className="px-6 py-16">
+        <p className="mb-3 font-mono text-xs uppercase tracking-[0.3em] text-accent">
+          {t("intent.eyebrow")}
+        </p>
+        <h2 className="font-display text-2xl font-semibold leading-tight text-zinc-50">
+          {t("intent.titleLine1")}
+          <br />
+          <span className="text-accent">{t("intent.titleLine2")}</span>
+        </h2>
+        <p className="mt-4 text-base text-zinc-400">{t("intent.body")}</p>
+      </section>
+
+      {/* Act 3 — Scenes 4-7 compressed into the five-layer pipeline. */}
       <section className="px-6 py-16">
         <div data-reveal>
           <p className="mb-3 font-mono text-xs uppercase tracking-[0.3em] text-accent">
             {t("whatIsIt.eyebrow")}
           </p>
-          <h2 className="font-display text-2xl font-semibold text-zinc-50">
-            {t("whatIsIt.title")}
+          <h2 className="font-display text-2xl font-semibold leading-tight text-zinc-50">
+            {t("whatIsIt.titleLine1")}
+            <br />
+            <span className="text-accent">{t("whatIsIt.titleLine2")}</span>
           </h2>
           <p className="mt-4 text-base text-zinc-400">{t("whatIsIt.body")}</p>
         </div>
@@ -193,6 +240,33 @@ export function StoryMobile() {
               </p>
             </div>
           ))}
+        </div>
+      </section>
+
+      {/* Act 4 — Scene 8: every failure becomes memory, the system evolves. */}
+      <section data-reveal className="px-6 py-16">
+        <p className="mb-3 font-mono text-xs uppercase tracking-[0.3em] text-accent">
+          {t("evolution.eyebrow")}
+        </p>
+        <h2 className="font-display text-2xl font-semibold leading-tight text-zinc-50">
+          {t("evolution.titleLine1")}
+          <br />
+          <span className="text-accent">{t("evolution.titleLine2")}</span>
+        </h2>
+        <p className="mt-4 text-base text-zinc-400">{t("evolution.body")}</p>
+        <div className="mt-8 flex flex-wrap gap-3">
+          <a
+            href="#agents"
+            className="rounded-full bg-zinc-50 px-5 py-3 text-sm font-medium text-zinc-950"
+          >
+            {t("evolution.ctaPrimary")}
+          </a>
+          <a
+            href="#install"
+            className="rounded-full border border-zinc-700 px-5 py-3 text-sm font-medium text-zinc-100"
+          >
+            {t("evolution.ctaSecondary")}
+          </a>
         </div>
       </section>
     </div>
