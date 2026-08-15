@@ -73,13 +73,22 @@ const VERTEX_SHADER = /* glsl */ `
 const FRAGMENT_SHADER = /* glsl */ `
   uniform float uCoreBoost;
   uniform float uAlphaScale;
+  uniform float uSharpness;
   varying vec3 vColor;
   void main() {
     float dist = length(gl_PointCoord - vec2(0.5));
-    float alpha = smoothstep(0.5, 0.05, dist);
+    // Two edge profiles: a soft gaussian-like falloff (glowy sparkle, used
+    // once the wordmark dissolves into chaos/cluster) and a near-hard disc
+    // (crisp dot, used while the letterforms need to actually read as
+    // text — a scatter of soft blobs never reconstructs legible strokes,
+    // no matter the point count or blending mode).
+    float softAlpha = smoothstep(0.5, 0.05, dist);
+    float hardAlpha = smoothstep(0.5, 0.4, dist);
+    float alpha = mix(softAlpha, hardAlpha, uSharpness);
+    float shapedAlpha = mix(alpha * alpha, alpha, uSharpness);
     float core = smoothstep(0.16, 0.0, dist);
     vec3 finalColor = vColor + core * uCoreBoost;
-    gl_FragColor = vec4(finalColor, alpha * alpha * uAlphaScale);
+    gl_FragColor = vec4(finalColor, shapedAlpha * uAlphaScale);
   }
 `;
 
@@ -117,6 +126,7 @@ export function AgentGraph({ progressRef }: AgentGraphProps) {
       uSizeScale: { value: 1 },
       uCoreBoost: { value: 0.55 },
       uAlphaScale: { value: 1 },
+      uSharpness: { value: 0 },
     }),
     []
   );
@@ -191,22 +201,27 @@ export function AgentGraph({ progressRef }: AgentGraphProps) {
     const flowFreq = 0.14;
     const flowSpeed = 0.12;
 
-    // The wordmark packs ~700 points into a small on-screen area. Additive
-    // blending (needed later for the sparkly chaos/cluster glow) sums every
-    // overlapping point's alpha, so a dense letterform saturates to one
-    // solid white blob and the word becomes unreadable — shrinking/dimming
-    // points alone (previous fix) wasn't enough. Switch to normal blending
-    // while the wordmark is legible (overlap just occludes instead of
-    // summing to white, so strokes and letter gaps stay visible), and only
-    // cross-fade into additive as it dissolves into chaos.
+    // The wordmark packs ~700 points into a small on-screen area. Two
+    // separate things were destroying legibility, not just one:
+    // (1) additive blending sums every overlapping point's alpha, so a
+    //     dense letterform saturates to one solid white blob — fixed by
+    //     switching to normal blending while the word is legible (overlap
+    //     occludes instead of summing to white) and only cross-fading to
+    //     additive as it dissolves into chaos, where the glow is wanted.
+    // (2) each point's edge is a soft gaussian-like falloff (intentional
+    //     for the glowy chaos/cluster look) — a scatter of soft blobs
+    //     never reads as crisp strokes no matter the blending mode or
+    //     point count, so uSharpness flips each dot to a near-hard disc
+    //     specifically while the wordmark needs to read as actual text.
     const additiveMix = smoothstep(0.1, 0.3, 1 - wWordmark);
     if (materialRef.current) {
       materialRef.current.blending =
         additiveMix > 0.5 ? THREE.AdditiveBlending : THREE.NormalBlending;
     }
-    uniforms.uSizeScale.value = THREE.MathUtils.lerp(0.32, 1.05, 1 - wWordmark);
+    uniforms.uSharpness.value = THREE.MathUtils.lerp(1, 0, 1 - wWordmark);
+    uniforms.uSizeScale.value = THREE.MathUtils.lerp(0.26, 1.05, 1 - wWordmark);
     uniforms.uCoreBoost.value = THREE.MathUtils.lerp(0.05, 0.55, 1 - wWordmark);
-    uniforms.uAlphaScale.value = THREE.MathUtils.lerp(0.92, 1, 1 - wWordmark);
+    uniforms.uAlphaScale.value = 1;
 
     if (posAttr && colorAttr) {
       nodes.forEach((n, i) => {

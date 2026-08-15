@@ -37,13 +37,14 @@ export function PostFX({
     aberrationRef.current?.offset.set(amount, amount * 0.6);
 
     // Same wordmark->chaos threshold as AgentGraph's phase weights. The
-    // wordmark's own additive-vs-normal blending switch (AgentGraph.tsx)
-    // is what actually keeps the letterforms legible now; this ramp just
-    // keeps bloom itself subtle while the word is meant to be read, then
-    // opens up once it dissolves into the sparkly chaos/cluster phases.
+    // wordmark's own blending + edge-sharpness switch (AgentGraph.tsx) is
+    // what makes the letterforms readable at all; bloom still needs to
+    // stay close to off while the word is legible, since mipmap blur
+    // re-softens even crisp, non-additive dots back toward a haze once
+    // its own intensity is anything but negligible.
     const t1 = MathUtils.smoothstep(p, 0.16, 0.32);
     if (bloomRef.current) {
-      bloomRef.current.intensity = MathUtils.lerp(0.05, 0.7, t1);
+      bloomRef.current.intensity = MathUtils.lerp(0.01, 0.7, t1);
     }
   });
 
