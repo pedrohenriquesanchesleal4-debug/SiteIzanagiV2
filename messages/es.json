@@ -4,7 +4,12 @@
     "description": "Framework de agentes y skills para ingeniería de software autónoma: 21 agentes especializados, enrutamiento adaptativo, evaluación, autocuración y memoria persistente."
   },
   "nav": {
+    "architecture": "Arquitectura",
     "agents": "Agentes",
+    "simulator": "Simulador de enjambre",
+    "skills": "Skills",
+    "playground": "Playground de skills",
+    "timeline": "Historial de versiones",
     "install": "Instalar",
     "changelog": "Changelog",
     "github": "GitHub",
@@ -321,8 +326,8 @@
   "skillsSection": {
     "eyebrow": "103 skills componibles",
     "title": "Todo el universo de skills, buscable.",
-    "body": "{count} skills alimentan los agentes de arriba. Busca por nombre, categoría o palabra clave — postgres, security, frontend, testing, architecture — y el universo se reorganiza según lo que coincide.",
-    "searchPlaceholder": "Busca skills — postgres, security, frontend, testing...",
+    "body": "{count} skills alimentan los agentes de arriba. Busca por nombre, categoría o palabra clave — database, security, frontend, testing, architecture — y el universo se reorganiza según lo que coincide.",
+    "searchPlaceholder": "Busca skills — database, security, frontend, testing...",
     "resultCount": "{count} / {total}",
     "allCategories": "Todas",
     "categories": {

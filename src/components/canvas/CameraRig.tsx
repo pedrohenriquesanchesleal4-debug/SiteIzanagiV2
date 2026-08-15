@@ -1,5 +1,13 @@
 "use client";
 
+/* eslint-disable react-hooks/immutability --
+ * `camera` (from useThree()) is a three.js Object3D, not React state: R3F's
+ * useFrame loop is meant to mutate it every frame — that's how the scene
+ * animates at 60fps without going through React's render cycle. The
+ * React Compiler's immutability assumption doesn't apply to imperative
+ * three.js/R3F code, so this file opts out of that specific rule.
+ */
+
 import { useFrame, useThree } from "@react-three/fiber";
 import { useRef } from "react";
 import * as THREE from "three";

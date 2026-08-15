@@ -229,44 +229,39 @@ export function SkillUniverse() {
           </motion.div>
         ) : null}
 
-        {/* Skill chip grid */}
+        {/* Skill chip grid — only real matches are rendered while filtering,
+            instead of dimming non-matches to a near-invisible state. */}
         <div className="mt-8 grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-4">
-          {ordered.map((skill) => {
-            const isMatch = !isFiltering || matches.get(skill.slug);
-            const isSelected = selected === skill.slug;
-            return (
-              <motion.button
-                key={skill.slug}
-                layout
-                type="button"
-                onClick={() => setSelected((current) => (current === skill.slug ? null : skill.slug))}
-                transition={{ type: "spring", stiffness: 400, damping: 34 }}
-                animate={{ opacity: isMatch ? 1 : 0.35 }}
-                className={`rounded-lg border px-3 py-2.5 text-left transition-colors ${
-                  isSelected
-                    ? "border-accent bg-accent/10"
-                    : isMatch
-                      ? "border-zinc-800 bg-zinc-900/50 hover:border-accent/60"
-                      : "border-zinc-900 bg-zinc-950"
-                }`}
-              >
-                <p
-                  className={`truncate font-mono text-xs ${
-                    isMatch ? "text-zinc-100" : "text-zinc-600"
+          {ordered
+            .filter((skill) => !isFiltering || matches.get(skill.slug))
+            .map((skill) => {
+              const isSelected = selected === skill.slug;
+              return (
+                <motion.button
+                  key={skill.slug}
+                  layout
+                  type="button"
+                  onClick={() => setSelected((current) => (current === skill.slug ? null : skill.slug))}
+                  transition={{ type: "spring", stiffness: 400, damping: 34 }}
+                  initial={false}
+                  animate={{ opacity: 1 }}
+                  className={`rounded-lg border px-3 py-2.5 text-left transition-colors ${
+                    isSelected
+                      ? "border-accent bg-accent/10"
+                      : "border-zinc-800 bg-zinc-900/50 hover:border-accent/60"
                   }`}
                 >
-                  {skill.name}
-                </p>
-                <p
-                  className={`mt-1 truncate font-mono text-[10px] uppercase tracking-wide ${
-                    isSelected ? "text-accent" : "text-zinc-600"
-                  }`}
-                >
-                  {t(`categories.${skill.category}`)}
-                </p>
-              </motion.button>
-            );
-          })}
+                  <p className="truncate font-mono text-xs text-zinc-100">{skill.name}</p>
+                  <p
+                    className={`mt-1 truncate font-mono text-[10px] uppercase tracking-wide ${
+                      isSelected ? "text-accent" : "text-zinc-600"
+                    }`}
+                  >
+                    {t(`categories.${skill.category}`)}
+                  </p>
+                </motion.button>
+              );
+            })}
         </div>
 
         {matchCount === 0 ? (

@@ -4,7 +4,7 @@ import Lenis from "lenis";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ScrambleTextPlugin } from "gsap/ScrambleTextPlugin";
-import { createContext, useContext, useEffect, useRef } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger, ScrambleTextPlugin);
@@ -25,7 +25,7 @@ export function useLenis() {
  * reads the same interpolated scroll position Lenis renders.
  */
 export function SmoothScrollProvider({ children }: { children: React.ReactNode }) {
-  const lenisRef = useRef<Lenis | null>(null);
+  const [lenis, setLenis] = useState<Lenis | null>(null);
 
   useEffect(() => {
     const prefersReducedMotion = window.matchMedia(
@@ -36,32 +36,36 @@ export function SmoothScrollProvider({ children }: { children: React.ReactNode }
       return;
     }
 
-    const lenis = new Lenis({
+    const instance = new Lenis({
       duration: 1.15,
       easing: (t: number) => 1 - Math.pow(1 - t, 3),
       wheelMultiplier: 1,
       touchMultiplier: 1.2,
       autoRaf: false,
     });
-    lenisRef.current = lenis;
+    // Lenis has no "created" event to subscribe to instead: this mounts the
+    // instance exactly once and publishes it to context consumers below —
+    // it never loops or cascades.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setLenis(instance);
 
-    lenis.on("scroll", ScrollTrigger.update);
+    instance.on("scroll", ScrollTrigger.update);
 
     const tickerCallback = (time: number) => {
-      lenis.raf(time * 1000);
+      instance.raf(time * 1000);
     };
     gsap.ticker.add(tickerCallback);
     gsap.ticker.lagSmoothing(0);
 
     return () => {
       gsap.ticker.remove(tickerCallback);
-      lenis.destroy();
-      lenisRef.current = null;
+      instance.destroy();
+      setLenis(null);
     };
   }, []);
 
   return (
-    <ScrollContext.Provider value={{ lenis: lenisRef.current }}>
+    <ScrollContext.Provider value={{ lenis }}>
       {children}
     </ScrollContext.Provider>
   );

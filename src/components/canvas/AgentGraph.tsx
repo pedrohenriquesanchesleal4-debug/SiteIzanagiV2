@@ -1,5 +1,20 @@
 "use client";
 
+/* eslint-disable react-hooks/immutability --
+ * This component drives a three.js particle system straight from a
+ * useFrame RAF loop: shader uniforms and typed-array buffer attributes
+ * (positions, uniforms.value) are mutated in place every frame by design —
+ * that's how R3F avoids going through React's render cycle at 60fps. The
+ * React Compiler's immutability assumption doesn't apply to this imperative
+ * three.js code, so this file opts out of that specific rule.
+ */
+/* eslint-disable react-hooks/purity --
+ * Math.random() below runs inside a useMemo(..., []) that generates each
+ * particle's stable per-mount attributes (seed, size, delay) exactly once —
+ * it's the intended way to memoize a "compute once" random value, not a
+ * per-render impurity bug.
+ */
+
 import { useFrame } from "@react-three/fiber";
 import { useMemo, useRef } from "react";
 import * as THREE from "three";
