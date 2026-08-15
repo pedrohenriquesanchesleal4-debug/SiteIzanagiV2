@@ -3,12 +3,46 @@ import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { getCommits, getReleases } from "@/lib/github";
 import { REPO_URL } from "@/content/agents";
+import { SITE_URL } from "@/lib/seo";
+import { routing } from "@/i18n/routing";
 
 export const revalidate = 3600;
 
-export async function generateMetadata(): Promise<Metadata> {
-  const t = await getTranslations("changelogPage");
-  return { title: t("title") };
+export async function generateMetadata({
+  params,
+}: PageProps<"/[locale]/changelog">): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "changelogPage" });
+  const title = t("title");
+  const description = t("subtitle");
+  const url = `${SITE_URL}/${locale}/changelog`;
+
+  return {
+    title,
+    description,
+    alternates: {
+      canonical: url,
+      languages: {
+        ...Object.fromEntries(
+          routing.locales.map((l) => [l, `${SITE_URL}/${l}/changelog`]),
+        ),
+        "x-default": `${SITE_URL}/${routing.defaultLocale}/changelog`,
+      },
+    },
+    openGraph: {
+      type: "website",
+      url,
+      title,
+      description,
+      locale,
+      siteName: "Izanagi AI",
+    },
+    twitter: {
+      card: "summary",
+      title,
+      description,
+    },
+  };
 }
 
 function formatDate(iso: string | null, locale: string) {
