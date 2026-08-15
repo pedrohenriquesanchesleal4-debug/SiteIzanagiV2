@@ -11,6 +11,8 @@ import { Footer } from "@/components/ui/Footer";
 import { ChatWidget, ChatProvider } from "@/components/ui/ChatWidget";
 import { CommandPalette } from "@/components/ui/CommandPalette";
 import { GrainOverlay } from "@/components/ui/GrainOverlay";
+import { StructuredData } from "@/components/seo/StructuredData";
+import { SITE_URL } from "@/lib/seo";
 import "../globals.css";
 
 const spaceGrotesk = Space_Grotesk({
@@ -30,9 +32,68 @@ export async function generateMetadata({
 }: LayoutProps<"/[locale]">): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "meta" });
+  const title = t("title");
+  const description = t("description");
+  const url = `${SITE_URL}/${locale}`;
+
   return {
-    title: t("title"),
-    description: t("description"),
+    metadataBase: new URL(SITE_URL),
+    title: {
+      default: title,
+      template: `%s — Izanagi AI`,
+    },
+    description,
+    keywords: [
+      "Izanagi AI",
+      "AI agent framework",
+      "autonomous software engineering",
+      "izanagi-ai npm package",
+      "multi-agent orchestration",
+      "AI coding agents",
+      "Claude Code agents",
+      "skill composer",
+      "self-healing AI runtime",
+    ],
+    applicationName: "Izanagi AI",
+    authors: [{ name: "Pedro Henrique", url: "https://github.com/pedrohenriquesanchesleal4-debug" }],
+    creator: "Pedro Henrique",
+    publisher: "Izanagi AI",
+    alternates: {
+      canonical: url,
+      languages: {
+        en: `${SITE_URL}/en`,
+        es: `${SITE_URL}/es`,
+        pt: `${SITE_URL}/pt`,
+        "x-default": `${SITE_URL}/en`,
+      },
+    },
+    openGraph: {
+      type: "website",
+      url,
+      siteName: "Izanagi AI",
+      title,
+      description,
+      locale,
+      images: [{ url: `${SITE_URL}/${locale}/opengraph-image`, width: 1200, height: 630, alt: title }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [`${SITE_URL}/${locale}/opengraph-image`],
+    },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        "max-image-preview": "large",
+        "max-snippet": -1,
+        "max-video-preview": -1,
+      },
+    },
+    category: "technology",
   };
 }
 
@@ -51,6 +112,7 @@ export default async function LocaleLayout({
 
   const messages = await getMessages();
   const t = await getTranslations({ locale, namespace: "a11y" });
+  const tMeta = await getTranslations({ locale, namespace: "meta" });
 
   return (
     <html
@@ -58,6 +120,7 @@ export default async function LocaleLayout({
       className={`${spaceGrotesk.variable} ${jetbrainsMono.variable} antialiased`}
     >
       <body className="min-h-screen bg-zinc-950 font-sans text-zinc-100">
+        <StructuredData locale={locale} title={tMeta("title")} description={tMeta("description")} />
         <NextIntlClientProvider messages={messages}>
           <SmoothScrollProvider>
             <ChatProvider>

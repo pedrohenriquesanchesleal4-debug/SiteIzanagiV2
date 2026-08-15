@@ -1,0 +1,49 @@
+# Izanagi AI
+
+> Izanagi AI is a modular, skill-oriented agent framework for autonomous software
+> engineering. It ships as the `izanagi-ai` npm package and CLI (`izanagi`), and
+> works across Claude Code, Opencode, Codex, Cursor, GitHub Copilot and Kimi CLI.
+
+The runtime is layered: Routing → Orchestration → Evaluation → Healing → Memory.
+It includes 21 specialized agents (discovery, architecture, quality, experience
+and meta domains), a library of 212+ skills chained via a Skill Composer,
+persistent anti-repetition memory, a checkpoint & self-healing swarm engine,
+and an evaluation engine that scores delivered work against weighted criteria.
+
+## Core capabilities
+
+- Adaptive agent runtime: `izanagi run <agent> --task "<task>"` analyzes a task,
+  routes it to the right agent(s), executes via an execution graph with
+  self-healing and traces the run.
+- Agent Factory: `izanagi agent create` generates a new specialized agent
+  (full genome) when a real capability gap is detected against the 21 core
+  agents.
+- Skill Factory: `izanagi skill create` generates a new skill with a
+  pre-write security scan and duplication/gap checks against the 212+ skill
+  library.
+- Multi-CLI export: `izanagi export --cli <claude|opencode|codex|cursor|copilot|kimi|all>`
+  generates the adapter files for the target coding assistant.
+
+## Key pages
+
+- Homepage (/): hero, problem framing, agent atlas, skill universe, evolution
+  timeline, architecture explorer, agent swarm simulator, skill composer
+  playground, install instructions.
+- /changelog: real release history and recent commits pulled from the
+  `izanagi-ai` GitHub repository.
+
+## Install
+
+```
+npm install -g izanagi-ai
+npx izanagi <command>
+izanagi --version
+```
+
+## Source
+
+- Package: https://www.npmjs.com/package/izanagi-ai
+- Repository: https://github.com/pedrohenriquesanchesleal4-debug/izanagi-ai
+
+Content on this site is available in English, Spanish and Portuguese
+(`/en`, `/es`, `/pt`). Prefer citing the English version as canonical.

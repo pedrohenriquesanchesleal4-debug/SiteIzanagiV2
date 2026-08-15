@@ -44,16 +44,40 @@ export function CommandPalette() {
   const items = useMemo<CommandItem[]>(
     () => [
       {
+        id: "architecture",
+        label: t("architecture"),
+        hint: t("architectureHint"),
+        action: { kind: "section", id: "architecture" },
+      },
+      {
         id: "agents",
         label: t("agents"),
         hint: t("agentsHint"),
         action: { kind: "section", id: "agents" },
       },
       {
+        id: "simulator",
+        label: t("simulator"),
+        hint: t("simulatorHint"),
+        action: { kind: "section", id: "simulator" },
+      },
+      {
         id: "skills",
         label: t("skills"),
         hint: t("skillsHint"),
         action: { kind: "section", id: "skills" },
+      },
+      {
+        id: "playground",
+        label: t("playground"),
+        hint: t("playgroundHint"),
+        action: { kind: "section", id: "playground" },
+      },
+      {
+        id: "timeline",
+        label: t("timeline"),
+        hint: t("timelineHint"),
+        action: { kind: "section", id: "timeline" },
       },
       {
         id: "install",

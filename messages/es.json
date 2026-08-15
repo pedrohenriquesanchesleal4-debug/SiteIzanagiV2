@@ -51,6 +51,223 @@
     "ctaPrimary": "Ver los agentes",
     "ctaSecondary": "Instalar ahora"
   },
+  "evolutionTimeline": {
+    "eyebrow": "Entregado, no en el roadmap",
+    "title": "El historial real de versiones del framework.",
+    "body": "Cada release de abajo es real — viene directo de los releases del paquete izanagi-ai en GitHub. Los saltos de versión major marcan cambios arquitectónicos reales, no hitos de marketing.",
+    "currentVersion": "actual: v{version}",
+    "railLabel": "Desplázate para ver más releases",
+    "prevLabel": "Release anterior",
+    "nextLabel": "Siguiente release",
+    "majorBadge": "Cambio arquitectónico",
+    "viewRelease": "Ver release en GitHub"
+  },
+  "architectureExplorer": {
+    "eyebrow": "El runtime, no un prompt",
+    "title": "Cinco capas. Un ciclo de ejecución cerrado.",
+    "body": "izanagi-ai es un runtime en capas de verdad, no una pila de plantillas de prompt: cada tarea se clasifica y enruta, se planifica en un grafo ejecutable, se evalúa con métricas ponderadas, se repara si falla y se recuerda entre sesiones. Selecciona una capa para ver los engines, agentes y comandos de CLI reales detrás de ella.",
+    "sectionLabels": {
+      "engines": "Engines centrales",
+      "agents": "Agentes que operan aquí",
+      "cli": "Superficie de CLI",
+      "feedsInto": "Alimenta",
+      "files": "Archivos fuente",
+      "empty": "Selecciona una capa arriba para inspeccionar sus engines, agentes y comandos de CLI."
+    },
+    "nav": {
+      "prevLayer": "Capa anterior",
+      "nextLayer": "Siguiente capa",
+      "step": "Capa {index} de {total}"
+    },
+    "layers": {
+      "routing": {
+        "name": "Routing",
+        "tagline": "Clasifica la tarea, elige el modelo, selecciona la cadena.",
+        "body": "Toda interacción entra por el Decision Engine, que clasifica la entrada en una de 15 categorías de tarea — new_project, bug, refactor, security_audit, review, optimize, teach y más — con una meta de confianza del 90% antes de ejecutar nada. Por debajo del 70% de confianza, el engine marca la entrada como incierta y pide aclaración en vez de arriesgar una suposición. Una vez clasificada, la tarea se empareja con una cadena de skills en la Skill Chain Matrix y se pasa al Skill Composer, que resuelve la composición de dominio correspondiente desde core/skill-resolver.json en lugar de activar skills de forma aislada. En paralelo, el Model Router puntúa los modelos candidatos por relevancia (peso 0.40), éxito histórico (0.20), compatibilidad, riesgo, costo y latencia, y luego asigna un tier — fast, balanced o premium — para que una pregunta simple nunca gaste un modelo premium innecesariamente.",
+        "engines": {
+          "decisionEngine": {
+            "name": "Decision Engine",
+            "description": "Punto de entrada de toda interacción. Clasifica la entrada en una categoría de tarea, valida dependencias de la cadena de skills antes de ejecutar y aplica el presupuesto de tokens en el momento del enrutamiento."
+          },
+          "modelRouter": {
+            "name": "Model Router & Adaptive Routing",
+            "description": "Selecciona el modelo por tarea según complejidad, exigencia de razonamiento, riesgo, costo, latencia y ventana de contexto en tres tiers: fast, balanced, premium."
+          }
+        }
+      },
+      "orchestration": {
+        "name": "Orchestration",
+        "tagline": "Convierte la cadena elegida en un grafo ejecutable.",
+        "body": "El Planning Engine divide la tarea en pasos atómicos — nunca más de un archivo o 50 líneas cada uno — estima el esfuerzo de cada paso y los ordena con un orden topológico para respetar las dependencias antes de escribir código. El Execution Graph convierte luego ese plan en un DAG explícito, construido dinámicamente para la tarea (nunca un workflow estático gigante), usando tipos de nodo como agent, skill, tool, validator, evaluator, aggregator, parallel y gate. Ya existen plantillas para formas comunes — fullstack (discovery → architect → security ∥ database ∥ product → senior-engineer → qa-gate ∥ critic → evaluation), debugging, security_audit, frontend y más — y el planificador calcula lotes paralelos siempre que los nodos no tengan dependencia mutua. Debajo de todo esto, el Skill Composer impone el encadenamiento salida→entrada en 12+ composiciones de dominio (web_cinematic, webgl_experience, api_backend, fullstack_crud, debug_session, refactor_safe...): una skill cargada fuera de su cadena de dominio es un antipatrón prohibido.",
+        "engines": {
+          "planningEngine": {
+            "name": "Planning Engine",
+            "description": "Descompone cualquier tarea en pasos atómicos y ordenados por dependencia, con estimación de esfuerzo, antes de escribir una sola línea de código."
+          },
+          "executionGraph": {
+            "name": "Execution Graph & Orchestration",
+            "description": "Construye un DAG dinámico por tarea con nodos tipados, políticas de reintento, timeouts y presupuesto de tokens por nodo; calcula lotes de ejecución paralela."
+          },
+          "skillComposer": {
+            "name": "Skill Composer",
+            "description": "Resuelve composiciones de dominio desde core/skill-resolver.json y encadena skills para que cada artefacto alimente al siguiente — las skills 'decorativas' aisladas están prohibidas."
+          }
+        }
+      },
+      "evaluation": {
+        "name": "Evaluation",
+        "tagline": "Puntúa el resultado, no confía a ciegas.",
+        "body": "El Evaluation Engine puntúa cada artefacto contra ocho métricas ponderadas — corrección (0.30), resultado de pruebas (0.20), cobertura de requisitos (0.15), arquitectura, seguridad, rendimiento, mantenibilidad y validez del artefacto — y deriva uno de cinco veredictos: PASS (puntaje ≥ 0.85, cero pruebas fallidas), PASS_WITH_WARNINGS, FAIL, BLOCKED o UNKNOWN. Antes de llegar a ese puntaje, toda salida ya pasó por seis Quality Gates: Security (fatal — bloquea la salida por completo), Style, Clarity, Conciseness, Completeness y un sexto gate, Masterpiece & High-Craft, fatal para trabajo visual y arquitectónico — rechazando AI-slop genérico, fidelidad de referencia rota o cualquier código stub/placeholder. Después de la entrega, el Reflection Engine ejecuta una autoevaluación estructurada sobre una ventana móvil de las últimas 50 tareas, puntuando calidad, proceso, seguridad y enseñanza, y envía cualquier patrón detectado al Evolution Engine.",
+        "engines": {
+          "evaluationEngine": {
+            "name": "Evaluation Engine",
+            "description": "Engine de puntuación por métricas ponderadas que deriva un veredicto PASS / PASS_WITH_WARNINGS / FAIL / BLOCKED / UNKNOWN para toda salida de agente o workflow."
+          },
+          "qualityGates": {
+            "name": "Quality Gates",
+            "description": "Seis gates secuenciales — Security, Style, Clarity, Conciseness, Completeness, Masterpiece & High-Craft — con Security y Masterpiece fatales si fallan."
+          },
+          "reflectionEngine": {
+            "name": "Reflection Engine",
+            "description": "Autoevaluación posterior a la tarea sobre una ventana móvil de 50 tareas; detecta errores recurrentes y patrones de desperdicio de tokens y los envía al Evolution Engine."
+          }
+        }
+      },
+      "healing": {
+        "name": "Healing",
+        "tagline": "Clasifica la falla, se recupera, nunca entra en bucle infinito.",
+        "body": "Cuando un Quality Gate o un comando de verificación falla, el Self-Healing & Failure Memory clasifica la falla en uno de siete tipos — recuperable (timeout, 429, 5xx), validación, planificación, herramienta, agente, dependencia o no recuperable — y aplica la estrategia correspondiente: reintento con backoff exponencial, reemplazo correctivo de skill, replanificación completa o handoff al agente responsable (devops, techlead, bug-hunter). Límites estrictos de intentos, tokens y tiempo total garantizan que el bucle siempre termine, abortando con un informe en vez de girar para siempre. El Checkpoint & Self-Healing Swarm Engine extiende esto con checkpoints de estado persistente para depuración con viaje en el tiempo y un bucle de prueba-corrección: captura el stack trace exacto, lo inyecta directamente en el contexto del especialista responsable, genera el parche correctivo y vuelve a ejecutar la verificación de forma autónoma hasta que el build quede en verde — sin humano en el bucle para fallas de rutina.",
+        "engines": {
+          "selfHealing": {
+            "name": "Self-Healing & Failure Memory",
+            "description": "Clasifica fallas en 7 tipos y aplica la estrategia de recuperación correspondiente; consulta patrones de falla conocidos mediante findRelevantFailures() antes de cada ejecución."
+          },
+          "checkpointSwarm": {
+            "name": "Checkpoint & Self-Healing Swarm Engine",
+            "description": "Persiste el estado intermedio para reanudación con viaje en el tiempo, y ejecuta bucles autónomos de captura → inyección → parche → revalidación hasta que las pruebas pasen."
+          }
+        }
+      },
+      "memory": {
+        "name": "Memory",
+        "tagline": "Nunca resuelve el mismo problema dos veces.",
+        "body": "El Context Engine construye una ventana de contexto mínima y de alta señal por tarea — secciones de sistema, proyecto, memoria y tarea, cada una con su propio tope de tokens — puntuando cada ítem de memoria candidato por relevancia antes de decidir si se carga completo, como resumen comprimido, o no se carga. Cuando el uso supera el 70% del presupuesto, el Compression Engine y el Token Manager entran en acción: cuatro niveles crecientes (lossless, light, aggressive, emergency) reducen el conteo de tokens mientras una regla estricta preserva las decisiones de seguridad y los ítems de acción completos, sin importar cuán agresiva sea la compresión. El Evolution Engine observa la salida del Reflection Engine en busca de patrones recurrentes y — una vez que un error se repite 3+ veces — propone una actualización concreta de skill o cadena, aplicando parches automáticamente pero exigiendo aprobación explícita para cualquier cambio estructural. Cada ejecución se traza de punta a punta en .izanagi/state/traces, y las lecciones duraderas persisten como entradas append-only en .agents/memoria/ (contexto.md, decisoes.md, erros-corrigidos.md, learnings.md) — la misma memoria anti-repetición que la fase Study-First del Skill Composer lee antes de que comience cualquier tarea nueva.",
+        "engines": {
+          "contextEngine": {
+            "name": "Context Engine",
+            "description": "Construye la ventana de contexto mínima y de alta señal por tarea y la comprime bajo un presupuesto estricto de tokens antes de entregarla al ejecutor."
+          },
+          "compressionEngine": {
+            "name": "Compression Engine",
+            "description": "Cuatro niveles crecientes de compresión (lossless → emergency) que reducen el conteo de tokens garantizando cero pérdida de ítems de seguridad e ítems de acción."
+          },
+          "tokenManager": {
+            "name": "Token Manager",
+            "description": "Rastrea y presupuesta cada token en tiers soft (2048), hard (4096), context (8192) y emergency (512), disparando compresión al 70% de uso."
+          },
+          "evolutionEngine": {
+            "name": "Evolution Engine",
+            "description": "Convierte patrones de reflexión en actualizaciones de skill/cadena una vez que un error se repite 3+ veces; aplica parches automáticamente, exige aprobación para cambios estructurales."
+          },
+          "tracing": {
+            "name": "Tracing & Observability",
+            "description": "Registra cada ejecución — tokens, reintentos, fallas, spans, veredicto de evaluación — en .izanagi/state/traces/<run-id>.json para replay completo."
+          }
+        }
+      }
+    }
+  },
+  "agentSimulator": {
+    "eyebrow": "Enjambre multiagente",
+    "title": "Mira al enjambre activarse",
+    "body": "Elige una tarea y mira qué agentes reales de Izanagi se ejecutarían en paralelo, en el mismo Multi-Agent Swarm Mode que el framework usa para tareas complejas.",
+    "simulatedBadge": "Ejecución simulada — no se ejecutó ningún agente real",
+    "chooseLabel": "Elige una tarea",
+    "runButton": "Ejecutar simulación",
+    "runningLabel": "Ejecutando…",
+    "resetButton": "Ejecutar otra tarea",
+    "idleHint": "Selecciona una tarea arriba y ejecuta la simulación para ver al enjambre activarse.",
+    "doneLabel": "Simulación completa. En una ejecución real, los handoffs continuarían hasta que el gate de evaluator/QA pase.",
+    "logAriaLabel": "Registro simulado de estado de los agentes",
+    "stageLabel": "Ola {index} de {total}",
+    "categories": {
+      "feature": {
+        "label": "Lanzar una feature nueva",
+        "description": "De requisitos a una porción vertical verificada y revisada.",
+        "transitions": [
+          "requisitos validados → arquitectura",
+          "arquitectura → implementación",
+          "implementación → verificación y revisión"
+        ]
+      },
+      "bug": {
+        "label": "Corregir un bug intermitente",
+        "description": "Reproducir, aislar la causa raíz, corregir y fijar con una prueba de regresión.",
+        "transitions": [
+          "causa raíz aislada → implementación",
+          "corrección implementada → verificación"
+        ]
+      },
+      "security": {
+        "label": "Revisión de seguridad",
+        "description": "Auditar problemas clase OWASP y reforzar la infraestructura alrededor.",
+        "transitions": [
+          "hallazgos → corrección y hardening",
+          "corrección y hardening → verificación"
+        ]
+      },
+      "agentDesign": {
+        "label": "Diseñar un agente nuevo",
+        "description": "Análisis de brecha de capacidad hasta un agente registrado con guardrails.",
+        "transitions": [
+          "brecha confirmada → skills y guardrails",
+          "skills y guardrails → revisión de gobernanza"
+        ]
+      }
+    },
+    "agentNames": {
+      "product-reasoner": "Product Reasoner",
+      "architect": "Software Architect",
+      "database": "Database Engineer",
+      "senior-engineer": "Senior Engineer",
+      "qa": "QA Engineer",
+      "techlead": "Tech Lead",
+      "bug-hunter": "Bug Hunter",
+      "security": "Security Engineer",
+      "devops": "DevOps Engineer",
+      "agent-architect": "Agent Architect",
+      "skill-architect": "Skill Architect"
+    },
+    "statusTemplates": {
+      "product-reasoner": "{agent}: convirtiendo el pedido en requisitos y criterios de aceptación BDD…",
+      "architect": "{agent}: diseñando el system design y los ADRs…",
+      "database": "{agent}: modelando esquema, índices y migraciones…",
+      "senior-engineer": "{agent}: implementando la porción vertical, cero stubs…",
+      "qa": "{agent}: escribiendo cobertura de regresión y E2E…",
+      "techlead": "{agent}: revisando el diff en 5 dimensiones de review…",
+      "bug-hunter": "{agent}: reproduciendo la falla y aislando la causa raíz…",
+      "security": "{agent}: ejecutando chequeos SAST/DAST y OWASP Top 10…",
+      "devops": "{agent}: reforzando los gates de CI/CD y la infra…",
+      "agent-architect": "{agent}: mapeando la brecha de capacidad contra los agentes existentes…",
+      "skill-architect": "{agent}: buscando skills y probando que la brecha es real…"
+    }
+  },
+  "skillPlayground": {
+    "eyebrow": "Skill Composer",
+    "title": "¿Qué cadena resuelve tu tarea?",
+    "body": "Escribe una tarea como se la pasarías a Izanagi. Esto resuelve contra el Skill Composer real — el mismo mapa de alias a cadena (`core/skill-resolver.json`) que usa la CLI para activar skills juntas, nunca una por vez.",
+    "inputLabel": "Describe una tarea para resolver una cadena de skills real",
+    "placeholder": "ej.: \"landing\", \"webgl\", \"api\", \"bug\"...",
+    "tryLabel": "Prueba uno de los disparadores reales",
+    "disclaimer": "Esto es coincidencia simple de palabras clave contra frases disparadoras y alias de skill reales del paquete instalado — no es IA ni búsqueda semántica.",
+    "domainLabel": "Dominio resuelto",
+    "stepCount": "{count} pasos",
+    "chainLabel": "Cadena de skills (en orden de activación)",
+    "coreEngine": "engine central",
+    "emptyStateTitle": "Ninguna composición coincide con eso todavía.",
+    "emptyStateBody": "Prueba uno de los disparadores reales abajo, o una palabra clave cercana como \"deploy\", \"crud\" o \"rag\".",
+    "idleHint": "Empieza a escribir, o elige un disparador real, para resolver una cadena."
+  },
   "agentsSection": {
     "eyebrow": "21 agentes especializados",
     "title": "Un especialista para cada decisión.",
@@ -186,10 +403,18 @@
     "esc": "Esc",
     "close": "Cerrar la paleta de comandos",
     "noResults": "Sin resultados.",
+    "architecture": "Arquitectura",
+    "architectureHint": "Ir al explorador de arquitectura",
     "agents": "Agentes",
     "agentsHint": "Ir al atlas de agentes",
+    "simulator": "Simulador de enjambre",
+    "simulatorHint": "Ir al simulador de enjambre de agentes",
     "skills": "Skills",
     "skillsHint": "Ir al universo de skills",
+    "playground": "Playground de skills",
+    "playgroundHint": "Ir al playground del skill composer",
+    "timeline": "Historial de versiones",
+    "timelineHint": "Ir a la línea de tiempo de evolución",
     "install": "Instalar",
     "installHint": "Ir a las instrucciones de instalación",
     "changelog": "Changelog",

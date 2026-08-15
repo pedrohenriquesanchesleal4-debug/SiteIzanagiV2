@@ -51,6 +51,223 @@
     "ctaPrimary": "See the agents",
     "ctaSecondary": "Install now"
   },
+  "evolutionTimeline": {
+    "eyebrow": "Shipped, not roadmapped",
+    "title": "The framework's own version history.",
+    "body": "Every release below is real — pulled straight from the izanagi-ai package's GitHub releases. Major jumps mark actual architectural shifts, not marketing milestones.",
+    "currentVersion": "current: v{version}",
+    "railLabel": "Scroll for more releases",
+    "prevLabel": "Previous release",
+    "nextLabel": "Next release",
+    "majorBadge": "Architectural shift",
+    "viewRelease": "View release on GitHub"
+  },
+  "architectureExplorer": {
+    "eyebrow": "The runtime, not a prompt",
+    "title": "Five layers. One closed execution loop.",
+    "body": "izanagi-ai ships as a real layered runtime, not a stack of prompt templates: every task is classified and routed, planned into an executable graph, evaluated against weighted metrics, healed on failure, and remembered across sessions. Select a layer to see the actual engine files, agents and CLI commands behind it.",
+    "sectionLabels": {
+      "engines": "Core engines",
+      "agents": "Agents operating here",
+      "cli": "CLI surface",
+      "feedsInto": "Feeds into",
+      "files": "Source files",
+      "empty": "Select a layer above to inspect its engines, agents and CLI surface."
+    },
+    "nav": {
+      "prevLayer": "Previous layer",
+      "nextLayer": "Next layer",
+      "step": "Layer {index} of {total}"
+    },
+    "layers": {
+      "routing": {
+        "name": "Routing",
+        "tagline": "Classify the task, pick the model, select the chain.",
+        "body": "Every interaction enters through the Decision Engine, which classifies input into one of 15 task categories — new_project, bug, refactor, security_audit, review, optimize, teach and more — with a 90% confidence target before anything executes. Below 70% confidence, the engine flags the input as uncertain and asks for clarification instead of guessing. Once classified, the task is matched to a skill chain in the Skill Chain Matrix and handed to the Skill Composer, which resolves the matching domain composition from core/skill-resolver.json rather than activating skills in isolation. In parallel, the Model Router scores candidate models on relevance (weight 0.40), historical success (0.20), compatibility, risk, cost and latency, then assigns a tier — fast, balanced or premium — so a simple question never burns a premium model unnecessarily.",
+        "engines": {
+          "decisionEngine": {
+            "name": "Decision Engine",
+            "description": "Entry point of every interaction. Classifies input into a task category, validates skill-chain dependencies before execution, and enforces the token budget at routing time."
+          },
+          "modelRouter": {
+            "name": "Model Router & Adaptive Routing",
+            "description": "Selects the model per task by complexity, reasoning requirement, risk, cost, latency and context window across three tiers: fast, balanced, premium."
+          }
+        }
+      },
+      "orchestration": {
+        "name": "Orchestration",
+        "tagline": "Turn the chosen chain into an executable graph.",
+        "body": "The Planning Engine breaks the task into atomic steps — never more than one file or 50 lines each — estimates effort per step, and orders them with a topological sort so dependencies are respected before any code is written. The Execution Graph then turns that plan into an explicit DAG built dynamically for the task (never a giant static workflow), using node kinds like agent, skill, tool, validator, evaluator, aggregator, parallel and gate. Templates already exist for common shapes — fullstack (discovery → architect → security ∥ database ∥ product → senior-engineer → qa-gate ∥ critic → evaluation), debugging, security_audit, frontend and more — and the planner computes parallel batches wherever nodes have no mutual dependency. Underneath it all, the Skill Composer enforces output→input chaining across 12+ domain compositions (web_cinematic, webgl_experience, api_backend, fullstack_crud, debug_session, refactor_safe...): a skill loaded outside its domain chain is a banned anti-pattern.",
+        "engines": {
+          "planningEngine": {
+            "name": "Planning Engine",
+            "description": "Decomposes any task into atomic, dependency-ordered steps with effort estimates before a single line of code is written."
+          },
+          "executionGraph": {
+            "name": "Execution Graph & Orchestration",
+            "description": "Builds a dynamic DAG per task with typed nodes, retry policies, timeouts and per-node token budgets; computes parallel execution batches."
+          },
+          "skillComposer": {
+            "name": "Skill Composer",
+            "description": "Resolves domain compositions from core/skill-resolver.json and chains skills so each artifact feeds the next — isolated 'decorative' skills are forbidden."
+          }
+        }
+      },
+      "evaluation": {
+        "name": "Evaluation",
+        "tagline": "Score the result, don't just trust it.",
+        "body": "The Evaluation Engine scores every artifact against eight weighted metrics — correctness (0.30), test results (0.20), requirement coverage (0.15), architecture, security, performance, maintainability and artifact validity — and derives one of five verdicts: PASS (score ≥ 0.85, zero failing tests), PASS_WITH_WARNINGS, FAIL, BLOCKED or UNKNOWN. Before that score is even reached, every output already passed through six Quality Gates: Security (fatal — blocks output outright), Style, Clarity, Conciseness, Completeness, and a sixth Masterpiece & High-Craft gate that is fatal for visual and architecture work — rejecting generic AI-slop, broken reference fidelity, or any stub/placeholder code. After delivery, the Reflection Engine runs a structured self-review over a rolling window of the last 50 tasks, scoring quality, process, security and teaching, and forwards any detected pattern to the Evolution Engine.",
+        "engines": {
+          "evaluationEngine": {
+            "name": "Evaluation Engine",
+            "description": "Weighted-metric scoring engine that derives a PASS / PASS_WITH_WARNINGS / FAIL / BLOCKED / UNKNOWN verdict for every agent or workflow output."
+          },
+          "qualityGates": {
+            "name": "Quality Gates",
+            "description": "Six sequential gates — Security, Style, Clarity, Conciseness, Completeness, Masterpiece & High-Craft — with Security and Masterpiece both fatal on failure."
+          },
+          "reflectionEngine": {
+            "name": "Reflection Engine",
+            "description": "Post-task self-review over a rolling 50-task window; detects recurring mistakes and token-waste patterns and feeds them to the Evolution Engine."
+          }
+        }
+      },
+      "healing": {
+        "name": "Healing",
+        "tagline": "Classify the failure, recover, never loop forever.",
+        "body": "When a Quality Gate or a verification command fails, Self-Healing & Failure Memory classifies the failure into one of seven types — recoverable (timeout, 429, 5xx), validation, planning, tool, agent, dependency or non-recoverable — and applies the matching strategy: exponential-backoff retry, corrective skill replacement, a full replan, or a handoff to the responsible agent (devops, techlead, bug-hunter). Hard limits on attempts, tokens and total time guarantee the loop always terminates, aborting with a report rather than spinning forever. The Checkpoint & Self-Healing Swarm Engine extends this with persistent state checkpoints for time-travel debugging and a test-fix loop: it captures the exact stack trace, injects it directly into the responsible specialist's context, generates the corrective patch, and re-runs verification autonomously until the build is green — no human in the loop for routine failures.",
+        "engines": {
+          "selfHealing": {
+            "name": "Self-Healing & Failure Memory",
+            "description": "Classifies failures into 7 types and applies the matching recovery strategy; consults known failure patterns via findRelevantFailures() before every execution."
+          },
+          "checkpointSwarm": {
+            "name": "Checkpoint & Self-Healing Swarm Engine",
+            "description": "Persists intermediate state for time-travel resume, and runs autonomous capture → inject → patch → revalidate loops until tests pass."
+          }
+        }
+      },
+      "memory": {
+        "name": "Memory",
+        "tagline": "Never solve the same problem twice.",
+        "body": "The Context Engine builds a minimal, high-signal context window per task — system, project, memory and task sections, each with its own token ceiling — scoring every candidate memory item for relevance before deciding whether to load it in full, as a compressed summary, or not at all. When usage crosses 70% of budget, the Compression Engine and Token Manager take over: four escalating levels (lossless, light, aggressive, emergency) shrink token count while a hard rule preserves security decisions and action items in full, no matter how aggressive the compression. The Evolution Engine watches the Reflection Engine's output for recurring patterns and — once a mistake repeats 3+ times — proposes a concrete skill or chain update, auto-applying patches but requiring explicit approval for anything structural. Every run is traced end-to-end into .izanagi/state/traces, and durable lessons persist as append-only entries in .agents/memoria/ (contexto.md, decisoes.md, erros-corrigidos.md, learnings.md) — the exact anti-repetition memory the Skill Composer's Study-First phase reads before any new task starts.",
+        "engines": {
+          "contextEngine": {
+            "name": "Context Engine",
+            "description": "Builds the minimal high-signal context window per task and compresses it under a strict token budget before delivering it to the executor."
+          },
+          "compressionEngine": {
+            "name": "Compression Engine",
+            "description": "Four escalating compression levels (lossless → emergency) that cut token count while guaranteeing zero loss of security items and action items."
+          },
+          "tokenManager": {
+            "name": "Token Manager",
+            "description": "Tracks and budgets every token across soft (2048), hard (4096), context (8192) and emergency (512) tiers, triggering compression at 70% usage."
+          },
+          "evolutionEngine": {
+            "name": "Evolution Engine",
+            "description": "Turns reflection patterns into skill/chain updates once a mistake recurs 3+ times; auto-applies patches, requires approval for structural changes."
+          },
+          "tracing": {
+            "name": "Tracing & Observability",
+            "description": "Records every execution — tokens, retries, failures, spans, evaluation verdict — to .izanagi/state/traces/<run-id>.json for full replay."
+          }
+        }
+      }
+    }
+  },
+  "agentSimulator": {
+    "eyebrow": "Multi-agent swarm",
+    "title": "Watch the swarm activate",
+    "body": "Pick a task and watch which real Izanagi agents would run concurrently, in the same Multi-Agent Swarm Mode the framework uses for complex tasks.",
+    "simulatedBadge": "Simulated run — no live agents were executed",
+    "chooseLabel": "Choose a task",
+    "runButton": "Run simulation",
+    "runningLabel": "Running…",
+    "resetButton": "Run another task",
+    "idleHint": "Select a task above, then run the simulation to see the swarm light up.",
+    "doneLabel": "Simulation complete. In a real run, handoffs would continue until the evaluator/QA gate passes.",
+    "logAriaLabel": "Simulated agent status log",
+    "stageLabel": "Wave {index} of {total}",
+    "categories": {
+      "feature": {
+        "label": "Ship a new feature",
+        "description": "Requirements to a verified, reviewed vertical slice.",
+        "transitions": [
+          "requirements validated → architecture",
+          "architecture → implementation",
+          "implementation → verification & review"
+        ]
+      },
+      "bug": {
+        "label": "Fix a flaky bug",
+        "description": "Reproduce, isolate root cause, patch, and lock in a regression test.",
+        "transitions": [
+          "root cause isolated → implementation",
+          "fix implemented → verification"
+        ]
+      },
+      "security": {
+        "label": "Security review",
+        "description": "Audit for OWASP-class issues and harden the surrounding infra.",
+        "transitions": [
+          "findings → fix & hardening",
+          "fix & hardening → verification"
+        ]
+      },
+      "agentDesign": {
+        "label": "Design a new agent",
+        "description": "Capability-gap analysis into a registered agent with guardrails.",
+        "transitions": [
+          "gap confirmed → skills & guardrails",
+          "skills & guardrails → governance review"
+        ]
+      }
+    },
+    "agentNames": {
+      "product-reasoner": "Product Reasoner",
+      "architect": "Software Architect",
+      "database": "Database Engineer",
+      "senior-engineer": "Senior Engineer",
+      "qa": "QA Engineer",
+      "techlead": "Tech Lead",
+      "bug-hunter": "Bug Hunter",
+      "security": "Security Engineer",
+      "devops": "DevOps Engineer",
+      "agent-architect": "Agent Architect",
+      "skill-architect": "Skill Architect"
+    },
+    "statusTemplates": {
+      "product-reasoner": "{agent}: converting the ask into requirements and BDD acceptance criteria…",
+      "architect": "{agent}: drafting system design and ADRs…",
+      "database": "{agent}: modeling schema, indexes and migrations…",
+      "senior-engineer": "{agent}: implementing the vertical slice, zero stubs…",
+      "qa": "{agent}: writing regression and E2E coverage…",
+      "techlead": "{agent}: reviewing the diff across 5 review dimensions…",
+      "bug-hunter": "{agent}: reproducing the failure and isolating root cause…",
+      "security": "{agent}: running SAST/DAST and OWASP Top 10 checks…",
+      "devops": "{agent}: hardening CI/CD gates and infra…",
+      "agent-architect": "{agent}: mapping the capability gap against existing agents…",
+      "skill-architect": "{agent}: sourcing skills and proving the gap is real…"
+    }
+  },
+  "skillPlayground": {
+    "eyebrow": "Skill Composer",
+    "title": "Which chain resolves your task?",
+    "body": "Type a task the way you'd hand it to Izanagi. This resolves against the real Skill Composer — the same alias-to-chain map (`core/skill-resolver.json`) the CLI uses to activate skills together, never one at a time.",
+    "inputLabel": "Describe a task to resolve a real skill chain",
+    "placeholder": "e.g. \"landing\", \"webgl\", \"api\", \"bug\"...",
+    "tryLabel": "Try one of the real triggers",
+    "disclaimer": "This is plain keyword matching against real trigger phrases and skill aliases from the installed package — not AI or semantic search.",
+    "domainLabel": "Resolved domain",
+    "stepCount": "{count} steps",
+    "chainLabel": "Skill chain (in activation order)",
+    "coreEngine": "core engine",
+    "emptyStateTitle": "No composition matches that yet.",
+    "emptyStateBody": "Try one of the real triggers below, or a close keyword like \"deploy\", \"crud\", or \"rag\".",
+    "idleHint": "Start typing, or pick a real trigger, to resolve a chain."
+  },
   "agentsSection": {
     "eyebrow": "21 specialized agents",
     "title": "A specialist for every decision.",
@@ -186,10 +403,18 @@
     "esc": "Esc",
     "close": "Close command palette",
     "noResults": "No matches.",
+    "architecture": "Architecture",
+    "architectureHint": "Jump to the architecture explorer",
     "agents": "Agents",
     "agentsHint": "Jump to the agent atlas",
+    "simulator": "Swarm simulator",
+    "simulatorHint": "Jump to the agent swarm simulator",
     "skills": "Skills",
     "skillsHint": "Jump to the skill universe",
+    "playground": "Skill playground",
+    "playgroundHint": "Jump to the skill composer playground",
+    "timeline": "Version history",
+    "timelineHint": "Jump to the evolution timeline",
     "install": "Install",
     "installHint": "Jump to install instructions",
     "changelog": "Changelog",
