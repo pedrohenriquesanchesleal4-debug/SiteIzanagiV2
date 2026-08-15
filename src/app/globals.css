@@ -3,17 +3,17 @@
 :root {
   --color-ink: #09090b;
   --color-paper: #e4e4e7;
-  --color-accent-violet: #7c3aed;
-  --color-accent-cyan: #22d3ee;
-  --color-accent-hot: #ff5a1f;
+  /* Single semantic accent for the whole site: a controlled, desaturated
+     amber — reads as instrument/signal-lamp precision, not AI-startup
+     neon. Used only for active/execution state, primary CTA, interactive
+     hover, and key data-highlight moments — never decoratively. */
+  --color-accent: #d98a2b;
 }
 
 @theme inline {
   --color-ink: var(--color-ink);
   --color-paper: var(--color-paper);
-  --color-accent-violet: var(--color-accent-violet);
-  --color-accent-cyan: var(--color-accent-cyan);
-  --color-accent-hot: var(--color-accent-hot);
+  --color-accent: var(--color-accent);
   --font-display: var(--font-space-grotesk);
   --font-mono: var(--font-jetbrains-mono);
 }
@@ -29,8 +29,8 @@ body {
 }
 
 ::selection {
-  background: var(--color-accent-violet);
-  color: white;
+  background: var(--color-accent);
+  color: var(--color-ink);
 }
 
 @keyframes fallback-node {

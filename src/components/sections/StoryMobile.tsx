@@ -88,11 +88,8 @@ export function StoryMobile() {
             <span
               key={i}
               data-mobile-dot
-              className="h-2 w-2 rounded-full"
-              style={{
-                background: `linear-gradient(135deg, #7C3AED, #22D3EE)`,
-                marginLeft: `${(i % 4) * 14}px`,
-              }}
+              className="h-2 w-2 rounded-full bg-zinc-700"
+              style={{ marginLeft: `${(i % 4) * 14}px` }}
             />
           ))}
         </div>
@@ -101,7 +98,7 @@ export function StoryMobile() {
           ref={(el) => {
             lineRefs.current[0] = el;
           }}
-          className="mb-4 font-mono text-xs uppercase tracking-[0.3em] text-cyan-400"
+          className="mb-4 font-mono text-xs uppercase tracking-[0.3em] text-accent"
         >
           {t("hero.eyebrow")}
         </p>
@@ -126,7 +123,7 @@ export function StoryMobile() {
             ref={(el) => {
               lineRefs.current[3] = el;
             }}
-            className="block bg-gradient-to-r from-violet-400 to-cyan-300 bg-clip-text text-transparent"
+            className="block text-accent"
           >
             {t("hero.titleLine3")}
           </span>
@@ -161,7 +158,7 @@ export function StoryMobile() {
       </section>
 
       <section data-reveal className="px-6 py-16">
-        <p className="mb-3 font-mono text-xs uppercase tracking-[0.3em] text-cyan-400">
+        <p className="mb-3 font-mono text-xs uppercase tracking-[0.3em] text-accent">
           {t("problem.eyebrow")}
         </p>
         <h2 className="font-display text-2xl font-semibold text-zinc-50">
@@ -172,7 +169,7 @@ export function StoryMobile() {
 
       <section className="px-6 py-16">
         <div data-reveal>
-          <p className="mb-3 font-mono text-xs uppercase tracking-[0.3em] text-cyan-400">
+          <p className="mb-3 font-mono text-xs uppercase tracking-[0.3em] text-accent">
             {t("whatIsIt.eyebrow")}
           </p>
           <h2 className="font-display text-2xl font-semibold text-zinc-50">
@@ -187,7 +184,7 @@ export function StoryMobile() {
               data-reveal-item
               className="rounded-xl border border-zinc-800 bg-zinc-900/60 px-4 py-3"
             >
-              <span className="font-mono text-xs text-cyan-400">0{i + 1}</span>
+              <span className="font-mono text-xs text-accent">0{i + 1}</span>
               <p className="mt-1 font-display text-sm font-medium text-zinc-100">
                 {t(`whatIsIt.layers.${key}.title`)}
               </p>

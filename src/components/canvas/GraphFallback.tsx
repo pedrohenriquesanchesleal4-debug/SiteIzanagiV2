@@ -24,9 +24,11 @@ export function GraphFallback() {
       preserveAspectRatio="xMidYMid slice"
     >
       <defs>
+        {/* Monochrome accent ramp (opacity only, no second hue) — keeps the
+            depth cue without reintroducing a bicolor gradient. */}
         <linearGradient id="graph-fallback-accent" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stopColor="#7C3AED" />
-          <stop offset="100%" stopColor="#22D3EE" />
+          <stop offset="0%" stopColor="#d98a2b" stopOpacity="1" />
+          <stop offset="100%" stopColor="#d98a2b" stopOpacity="0.35" />
         </linearGradient>
       </defs>
       {EDGES.map(([a, b], i) => (

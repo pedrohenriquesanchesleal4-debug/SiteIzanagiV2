@@ -2,17 +2,14 @@
 
 import { useTranslations } from "next-intl";
 import { useEffect, useRef } from "react";
-import { AGENTS, DOMAIN_ORDER, type AgentDomain } from "@/content/agents";
+import { AGENTS, DOMAIN_ORDER } from "@/content/agents";
 import { gsap, ScrollTrigger } from "@/lib/scroll";
 import { ScrambleLabel } from "@/components/ui/ScrambleLabel";
 
-const DOMAIN_ACCENT: Record<AgentDomain, string> = {
-  discovery: "from-cyan-400/20 to-transparent",
-  architecture: "from-violet-400/20 to-transparent",
-  quality: "from-emerald-400/20 to-transparent",
-  experience: "from-amber-400/20 to-transparent",
-  meta: "from-pink-400/20 to-transparent",
-};
+// Every domain shares the same neutral card wash now — the accent color is
+// reserved for active/interactive signal, not for decoratively color-coding
+// categories.
+const CARD_WASH = "from-zinc-800/40 to-transparent";
 
 export function AgentsGrid() {
   const t = useTranslations("agentsSection");
@@ -42,7 +39,7 @@ export function AgentsGrid() {
   return (
     <section id="agents" ref={rootRef} className="relative bg-zinc-950 px-6 py-28 sm:px-12">
       <div className="mx-auto max-w-6xl">
-        <ScrambleLabel text={t("eyebrow")} className="font-mono text-xs uppercase tracking-[0.3em] text-cyan-400" />
+        <ScrambleLabel text={t("eyebrow")} className="font-mono text-xs uppercase tracking-[0.3em] text-accent" />
         <h2 className="mt-4 max-w-2xl font-display text-3xl font-semibold text-zinc-50 sm:text-5xl">
           {t("title")}
         </h2>
@@ -61,7 +58,7 @@ export function AgentsGrid() {
                     <div
                       key={agent.slug}
                       data-agent-card
-                      className={`group relative overflow-hidden rounded-2xl border border-zinc-800 bg-gradient-to-b p-5 transition hover:border-zinc-600 ${DOMAIN_ACCENT[domain]}`}
+                      className={`group relative overflow-hidden rounded-2xl border border-zinc-800 bg-gradient-to-b p-5 transition hover:border-zinc-600 ${CARD_WASH}`}
                     >
                       <p className="font-mono text-[11px] text-zinc-500">{agent.command}</p>
                       <p className="mt-2 font-display text-base font-medium text-zinc-100">

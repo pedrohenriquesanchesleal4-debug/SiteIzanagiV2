@@ -108,7 +108,7 @@ export function StoryDesktop() {
               ref={(el) => {
                 eyebrowRefs.current[0] = el;
               }}
-              className="mb-4 font-mono text-xs uppercase tracking-[0.3em] text-cyan-400"
+              className="mb-4 font-mono text-xs uppercase tracking-[0.3em] text-accent"
             >
               {t("hero.eyebrow")}
             </p>
@@ -117,16 +117,14 @@ export function StoryDesktop() {
               <br />
               {t("hero.titleLine2")}
               <br />
-              <span className="bg-gradient-to-r from-violet-400 to-cyan-300 bg-clip-text text-transparent">
-                {t("hero.titleLine3")}
-              </span>
+              <span className="text-accent">{t("hero.titleLine3")}</span>
             </h1>
             <p className="mt-6 max-w-xl text-lg text-zinc-400">{t("hero.subtitle")}</p>
             <div className="mt-9 flex flex-wrap gap-4">
               <Magnetic>
                 <a
                   href="#agents"
-                  className="rounded-full bg-zinc-50 px-6 py-3 text-sm font-medium text-zinc-950 transition hover:bg-cyan-300"
+                  className="rounded-full bg-zinc-50 px-6 py-3 text-sm font-medium text-zinc-950 transition hover:bg-accent"
                 >
                   {t("hero.ctaPrimary")}
                 </a>
@@ -157,7 +155,7 @@ export function StoryDesktop() {
               ref={(el) => {
                 eyebrowRefs.current[1] = el;
               }}
-              className="mb-4 font-mono text-xs uppercase tracking-[0.3em] text-cyan-400"
+              className="mb-4 font-mono text-xs uppercase tracking-[0.3em] text-accent"
             >
               {t("problem.eyebrow")}
             </p>
@@ -179,7 +177,7 @@ export function StoryDesktop() {
               ref={(el) => {
                 eyebrowRefs.current[2] = el;
               }}
-              className="mb-4 font-mono text-xs uppercase tracking-[0.3em] text-cyan-400"
+              className="mb-4 font-mono text-xs uppercase tracking-[0.3em] text-accent"
             >
               {t("whatIsIt.eyebrow")}
             </p>
@@ -193,7 +191,7 @@ export function StoryDesktop() {
                   key={key}
                   className="rounded-xl border border-zinc-800 bg-zinc-900/60 px-4 py-3"
                 >
-                  <span className="font-mono text-xs text-cyan-400">0{i + 1}</span>
+                  <span className="font-mono text-xs text-accent">0{i + 1}</span>
                   <p className="mt-1 font-display text-sm font-medium text-zinc-100">
                     {t(`whatIsIt.layers.${key}.title`)}
                   </p>

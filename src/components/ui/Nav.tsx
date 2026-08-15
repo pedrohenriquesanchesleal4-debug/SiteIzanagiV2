@@ -4,9 +4,12 @@ import { useTranslations } from "next-intl";
 import { LocaleSwitcher } from "./LocaleSwitcher";
 import { Link } from "@/i18n/navigation";
 import { REPO_URL } from "@/content/agents";
+import { useChat } from "./ChatWidget";
 
 export function Nav() {
   const t = useTranslations("nav");
+  const tChat = useTranslations("chat");
+  const { open, toggleChat } = useChat();
 
   return (
     <header className="pointer-events-none fixed inset-x-0 top-0 z-50 flex justify-center px-4 pt-4 sm:px-8">
@@ -33,7 +36,22 @@ export function Nav() {
             {t("github")}
           </a>
         </div>
-        <LocaleSwitcher />
+        <div className="flex items-center gap-3">
+          <button
+            type="button"
+            onClick={toggleChat}
+            aria-haspopup="dialog"
+            aria-expanded={open}
+            className={`rounded-full border px-3.5 py-1.5 text-xs font-medium transition sm:text-sm ${
+              open
+                ? "border-accent/60 text-accent"
+                : "border-zinc-700 text-zinc-300 hover:border-zinc-500 hover:text-zinc-100"
+            }`}
+          >
+            {tChat("launcherLabel")}
+          </button>
+          <LocaleSwitcher />
+        </div>
       </nav>
     </header>
   );

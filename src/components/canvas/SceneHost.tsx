@@ -62,8 +62,10 @@ export function SceneHost({
       camera={{ position: [0, 0, 11], fov: 45 }}
     >
       <ambientLight intensity={0.6} />
-      <pointLight position={[6, 6, 6]} intensity={40} color="#22D3EE" />
-      <pointLight position={[-6, -4, 4]} intensity={30} color="#7C3AED" />
+      {/* Neutral key light + single accent rim light — one signal color,
+          not a violet/cyan dual-tone wash. */}
+      <pointLight position={[6, 6, 6]} intensity={30} color="#e4e4e7" />
+      <pointLight position={[-6, -4, 4]} intensity={22} color="#d98a2b" />
       <CameraRig progressRef={progressRef} />
       <Suspense fallback={null}>
         <AgentGraph progressRef={progressRef} />

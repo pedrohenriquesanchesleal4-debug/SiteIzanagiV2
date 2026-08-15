@@ -27,7 +27,7 @@ function CopyableLine({ text }: { text: string }) {
         <span className="select-none text-zinc-600">$ </span>
         {text}
       </code>
-      <span className="shrink-0 font-mono text-xs text-zinc-500 group-hover:text-cyan-400">
+      <span className="shrink-0 font-mono text-xs text-zinc-500 group-hover:text-accent">
         {copied ? t("copied") : t("copy")}
       </span>
     </button>
@@ -41,7 +41,7 @@ export function InstallSection() {
   return (
     <section id="install" className="relative bg-zinc-950 px-6 py-28 sm:px-12">
       <div className="mx-auto max-w-3xl">
-        <ScrambleLabel text={t("eyebrow")} className="font-mono text-xs uppercase tracking-[0.3em] text-cyan-400" />
+        <ScrambleLabel text={t("eyebrow")} className="font-mono text-xs uppercase tracking-[0.3em] text-accent" />
         <h2 className="mt-4 font-display text-3xl font-semibold text-zinc-50 sm:text-5xl">
           {t("title")}
         </h2>

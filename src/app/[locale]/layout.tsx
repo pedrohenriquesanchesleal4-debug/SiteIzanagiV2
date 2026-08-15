@@ -8,7 +8,7 @@ import { routing } from "@/i18n/routing";
 import { SmoothScrollProvider } from "@/lib/scroll";
 import { Nav } from "@/components/ui/Nav";
 import { Footer } from "@/components/ui/Footer";
-import { ChatWidget } from "@/components/ui/ChatWidget";
+import { ChatWidget, ChatProvider } from "@/components/ui/ChatWidget";
 import { GrainOverlay } from "@/components/ui/GrainOverlay";
 import "../globals.css";
 
@@ -59,17 +59,19 @@ export default async function LocaleLayout({
       <body className="min-h-screen bg-zinc-950 font-sans text-zinc-100">
         <NextIntlClientProvider messages={messages}>
           <SmoothScrollProvider>
-            <a
-              href="#main"
-              className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-zinc-50 focus:px-4 focus:py-2 focus:text-sm focus:text-zinc-950"
-            >
-              {t("skipToContent")}
-            </a>
-            <GrainOverlay />
-            <Nav />
-            <main id="main">{children}</main>
-            <Footer />
-            <ChatWidget />
+            <ChatProvider>
+              <a
+                href="#main"
+                className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-zinc-50 focus:px-4 focus:py-2 focus:text-sm focus:text-zinc-950"
+              >
+                {t("skipToContent")}
+              </a>
+              <GrainOverlay />
+              <Nav />
+              <main id="main">{children}</main>
+              <Footer />
+              <ChatWidget />
+            </ChatProvider>
           </SmoothScrollProvider>
         </NextIntlClientProvider>
       </body>

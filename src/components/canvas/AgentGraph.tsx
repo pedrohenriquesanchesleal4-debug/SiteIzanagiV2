@@ -16,8 +16,10 @@ const WORDMARK_SCALE_Y = 0.74;
 const WORDMARK_OFFSET_X = 2.5;
 const WORDMARK_OFFSET_Y = 0.9;
 
-const ACCENT_START = new THREE.Color("#7C3AED");
-const ACCENT_END = new THREE.Color("#22D3EE");
+// Single semantic accent (matches --color-accent in globals.css) — clusters
+// no longer ramp between two competing hues, only between this accent and
+// the neutral wordmark color.
+const ACCENT = new THREE.Color("#d98a2b");
 const WORDMARK_COLOR = new THREE.Color("#F4F4F5");
 
 function smoothstep(edge0: number, edge1: number, x: number) {
@@ -220,11 +222,9 @@ export function AgentGraph({ progressRef }: AgentGraphProps) {
 
         posAttr.setXYZ(i, x, y, z);
 
-        const clusterT = n.clusterIndex / (CLUSTER_COUNT - 1);
-        const clusterColor = ACCENT_START.clone().lerp(ACCENT_END, clusterT);
-        const r = THREE.MathUtils.lerp(WORDMARK_COLOR.r, clusterColor.r, 1 - wWordmark);
-        const g = THREE.MathUtils.lerp(WORDMARK_COLOR.g, clusterColor.g, 1 - wWordmark);
-        const b = THREE.MathUtils.lerp(WORDMARK_COLOR.b, clusterColor.b, 1 - wWordmark);
+        const r = THREE.MathUtils.lerp(WORDMARK_COLOR.r, ACCENT.r, 1 - wWordmark);
+        const g = THREE.MathUtils.lerp(WORDMARK_COLOR.g, ACCENT.g, 1 - wWordmark);
+        const b = THREE.MathUtils.lerp(WORDMARK_COLOR.b, ACCENT.b, 1 - wWordmark);
         colorAttr.setXYZ(i, r, g, b);
       });
       posAttr.needsUpdate = true;
@@ -304,7 +304,7 @@ export function AgentGraph({ progressRef }: AgentGraphProps) {
           <bufferAttribute attach="attributes-position" args={[linePositions, 3]} />
         </bufferGeometry>
         <lineBasicMaterial
-          color="#8B9BFF"
+          color="#52525b"
           transparent
           opacity={0}
           depthWrite={false}

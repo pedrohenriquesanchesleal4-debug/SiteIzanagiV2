@@ -9,7 +9,7 @@ export function CTASection() {
 
   return (
     <section className="relative overflow-hidden bg-zinc-950 px-6 py-32 sm:px-12">
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(124,58,237,0.15),_transparent_60%)]" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(217,138,43,0.12),_transparent_60%)]" />
       <div className="relative mx-auto max-w-3xl text-center">
         <h2 className="font-display text-3xl font-semibold text-zinc-50 sm:text-5xl">
           {t("title")}

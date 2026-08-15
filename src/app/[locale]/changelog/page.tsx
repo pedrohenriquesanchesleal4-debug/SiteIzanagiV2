@@ -38,7 +38,7 @@ export default async function ChangelogPage({
         ← {t("back")}
       </Link>
 
-      <p className="mt-8 font-mono text-xs uppercase tracking-[0.3em] text-cyan-400">
+      <p className="mt-8 font-mono text-xs uppercase tracking-[0.3em] text-accent">
         {t("eyebrow")}
       </p>
       <h1 className="mt-4 font-display text-4xl font-semibold text-zinc-50 sm:text-5xl">
@@ -56,9 +56,9 @@ export default async function ChangelogPage({
           <ol className="mt-6 space-y-6 border-l border-zinc-800 pl-6">
             {releases.map((r) => (
               <li key={r.id} className="relative">
-                <span className="absolute -left-[29px] top-1.5 h-2.5 w-2.5 rounded-full bg-gradient-to-br from-violet-400 to-cyan-300" />
+                <span className="absolute -left-[29px] top-1.5 h-2.5 w-2.5 rounded-full bg-accent" />
                 <div className="flex flex-wrap items-baseline gap-3">
-                  <code className="font-mono text-sm text-cyan-400">
+                  <code className="font-mono text-sm text-accent">
                     {r.tagName || t("unreleased")}
                   </code>
                   <span className="font-mono text-xs text-zinc-600">
@@ -90,7 +90,7 @@ export default async function ChangelogPage({
           <ul className="mt-6 divide-y divide-zinc-800 rounded-2xl border border-zinc-800">
             {commits.map((c) => (
               <li key={c.sha} className="flex items-center gap-4 px-5 py-4">
-                <code className="shrink-0 font-mono text-xs text-cyan-400">{c.sha}</code>
+                <code className="shrink-0 font-mono text-xs text-accent">{c.sha}</code>
                 <p className="flex-1 truncate text-sm text-zinc-300">{c.message}</p>
                 <a
                   href={c.htmlUrl}
