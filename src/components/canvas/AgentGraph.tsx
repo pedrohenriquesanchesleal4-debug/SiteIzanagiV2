@@ -191,13 +191,22 @@ export function AgentGraph({ progressRef }: AgentGraphProps) {
     const flowFreq = 0.14;
     const flowSpeed = 0.12;
 
-    // The wordmark packs ~700 points into a small on-screen area; with
-    // additive blending, letting them stay full-size/full-alpha overlaps
-    // into one solid blob (no letter gaps survive). Shrink and dim them
-    // hard while the wordmark is legible, then grow back for chaos/cluster.
-    uniforms.uSizeScale.value = THREE.MathUtils.lerp(0.22, 1.05, 1 - wWordmark);
-    uniforms.uCoreBoost.value = THREE.MathUtils.lerp(0.08, 0.55, 1 - wWordmark);
-    uniforms.uAlphaScale.value = THREE.MathUtils.lerp(0.55, 1, 1 - wWordmark);
+    // The wordmark packs ~700 points into a small on-screen area. Additive
+    // blending (needed later for the sparkly chaos/cluster glow) sums every
+    // overlapping point's alpha, so a dense letterform saturates to one
+    // solid white blob and the word becomes unreadable — shrinking/dimming
+    // points alone (previous fix) wasn't enough. Switch to normal blending
+    // while the wordmark is legible (overlap just occludes instead of
+    // summing to white, so strokes and letter gaps stay visible), and only
+    // cross-fade into additive as it dissolves into chaos.
+    const additiveMix = smoothstep(0.1, 0.3, 1 - wWordmark);
+    if (materialRef.current) {
+      materialRef.current.blending =
+        additiveMix > 0.5 ? THREE.AdditiveBlending : THREE.NormalBlending;
+    }
+    uniforms.uSizeScale.value = THREE.MathUtils.lerp(0.32, 1.05, 1 - wWordmark);
+    uniforms.uCoreBoost.value = THREE.MathUtils.lerp(0.05, 0.55, 1 - wWordmark);
+    uniforms.uAlphaScale.value = THREE.MathUtils.lerp(0.92, 1, 1 - wWordmark);
 
     if (posAttr && colorAttr) {
       nodes.forEach((n, i) => {
