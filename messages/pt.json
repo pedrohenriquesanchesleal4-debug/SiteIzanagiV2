@@ -348,6 +348,29 @@
     "close": "Fechar",
     "emptyState": "Nenhuma skill corresponde. Tente outro termo."
   },
+  "runtimeTools": {
+    "eyebrow": "Veja funcionando, não só confie",
+    "title": "Um dashboard pra suas execuções. Uma arena pra provar.",
+    "body": "Duas ferramentas locais que transformam \"o framework diz que funcionou\" em algo que você consegue de fato conferir.",
+    "dashboard": {
+      "title": "Dashboard",
+      "body": "Uma página local que lê direto do seu próprio histórico de execuções — sem nuvem, sem conta, nada é enviado pra lugar nenhum. Sobe uma vez e fica no ar.",
+      "points": [
+        "Run Explorer: tarefa, agentes, score e eventos de healing de cada execução",
+        "Execution Graph mostra quais etapas rodaram em paralelo de verdade",
+        "Atualização ao vivo enquanto a execução ainda está rolando — sem dar F5"
+      ]
+    },
+    "arena": {
+      "title": "Arena",
+      "body": "Um conjunto de benchmarks que mede tarefas reais (coding, segurança, banco de dados...) em vez de confiar na palavra de alguém.",
+      "points": [
+        "Roda 100% offline por padrão — custo zero de token, a menos que você conecte um modelo real",
+        "Compara producers cara a cara; um empate real nunca vira vencedor forçado",
+        "Todo relatório fica salvo — dá pra pegar uma regressão entre versões"
+      ]
+    }
+  },
   "install": {
     "eyebrow": "Comece agora",
     "title": "Quatro comandos. Zero configuração.",

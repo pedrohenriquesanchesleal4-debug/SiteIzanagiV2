@@ -348,6 +348,29 @@
     "close": "Close",
     "emptyState": "No skills match. Try another term."
   },
+  "runtimeTools": {
+    "eyebrow": "See it, don't just trust it",
+    "title": "A dashboard for your runs. An arena for proof.",
+    "body": "Two local tools that turn \"the framework says it worked\" into something you can actually check.",
+    "dashboard": {
+      "title": "Dashboard",
+      "body": "A local page that reads straight from your own run history — no cloud, no account, nothing sent anywhere. Start it once and leave it running.",
+      "points": [
+        "Run Explorer: task, agents, score and healing events for every run",
+        "Execution Graph shows which steps actually ran in parallel",
+        "Live updates while a run is still in progress — no manual reload"
+      ]
+    },
+    "arena": {
+      "title": "Arena",
+      "body": "A benchmark suite that scores real tasks (coding, security, database...) instead of taking anyone's word for it.",
+      "points": [
+        "Runs fully offline by default — zero token cost unless you wire a real model",
+        "Compares producers head-to-head; a genuine tie never gets a forced winner",
+        "Every report is saved, so you can catch a regression between versions"
+      ]
+    }
+  },
   "install": {
     "eyebrow": "Get started",
     "title": "Four commands. Zero config.",
