@@ -44,7 +44,11 @@ export function PostFX({
     // its own intensity is anything but negligible.
     const t1 = MathUtils.smoothstep(p, 0.16, 0.32);
     if (bloomRef.current) {
-      bloomRef.current.intensity = MathUtils.lerp(0.01, 0.7, t1);
+      // Ceiling cut from 0.7 to 0.4 — at 0.7 the chaos-phase glow washed out the
+      // protective gradient behind the Act text (StoryDesktop.tsx), so the text
+      // read as if particles were covering it even though it was correctly
+      // stacked above the canvas. 0.4 keeps real glow without erasing contrast.
+      bloomRef.current.intensity = MathUtils.lerp(0.01, 0.4, t1);
     }
   });
 
@@ -52,7 +56,7 @@ export function PostFX({
     <EffectComposer multisampling={0}>
       <Bloom
         ref={bloomRef}
-        intensity={0.7}
+        intensity={0.4}
         luminanceThreshold={0.4}
         luminanceSmoothing={0.3}
         mipmapBlur

@@ -22,7 +22,10 @@ import { createNoise4D } from "simplex-noise";
 import { sampleTextPoints } from "@/lib/textPoints";
 
 const CLUSTER_COUNT = 5;
-const POINTS_PER_CLUSTER = 144;
+// 144 (720 total, ~100/letter) was too sparse for thin strokes (I, N, A) to read as
+// solid — the wordmark looked dithered/blurry even with sharp point edges and no
+// bloom. 300/cluster (~1500 total, ~215/letter) is the minimum that reads clearly.
+const POINTS_PER_CLUSTER = 300;
 const TOTAL_POINTS = CLUSTER_COUNT * POINTS_PER_CLUSTER;
 const CHAOS_RADIUS = 7;
 const CLUSTER_RADIUS = 4.2;
@@ -151,8 +154,10 @@ export function AgentGraph({ progressRef }: AgentGraphProps) {
 
       return {
         wordmark: new THREE.Vector3(
-          wp.x * WORDMARK_SCALE_X + WORDMARK_OFFSET_X + (Math.random() - 0.5) * 0.04,
-          wp.y * WORDMARK_SCALE_Y + WORDMARK_OFFSET_Y + (Math.random() - 0.5) * 0.04,
+          // Jitter cut from 0.04 to 0.01 — at the higher point density above, the old
+          // jitter was wide enough to blur thin strokes into a haze on its own.
+          wp.x * WORDMARK_SCALE_X + WORDMARK_OFFSET_X + (Math.random() - 0.5) * 0.01,
+          wp.y * WORDMARK_SCALE_Y + WORDMARK_OFFSET_Y + (Math.random() - 0.5) * 0.01,
           (Math.random() - 0.5) * 0.3
         ),
         chaos: randomOnSphere(CHAOS_RADIUS),

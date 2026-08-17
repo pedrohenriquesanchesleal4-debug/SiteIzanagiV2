@@ -124,7 +124,15 @@ export function StoryDesktop() {
         <div className="absolute inset-0">
           <SceneHost progressRef={progressRef} />
         </div>
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-zinc-950/40 via-transparent to-zinc-950" />
+        {/*
+          `via-transparent` used to go fully clear right in the vertical center — exactly
+          where every Act's text sits (flex items-center) and where the particle field's
+          bloom peaks (see PostFX intensity ramp). Text wasn't behind the particles
+          (z-10 already stacks above the canvas), it just lost contrast against a bright
+          field directly behind it. A real mid-tone keeps a legible base under the text
+          at every scroll position instead of only at the very top/bottom.
+        */}
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-zinc-950/50 via-zinc-950/35 to-zinc-950/80" />
 
         {/* Act 0 — Hero: cinematic boot. IZANAGI, then the pipeline it runs on. */}
         <div
