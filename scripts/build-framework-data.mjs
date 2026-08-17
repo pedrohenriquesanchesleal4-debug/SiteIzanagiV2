@@ -31,6 +31,7 @@ const DOMAIN_BY_SLUG = {
 
   architect: "architecture",
   "senior-engineer": "architecture",
+  "ai-engineer": "architecture",
   techlead: "architecture",
   database: "architecture",
   devops: "architecture",

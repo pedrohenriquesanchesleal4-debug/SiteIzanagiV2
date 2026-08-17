@@ -27,6 +27,7 @@ export const AGENTS: AgentDef[] = [
 
   { slug: "architect", command: "/architect", domain: "architecture" },
   { slug: "senior-engineer", command: "/senior-engineer", domain: "architecture" },
+  { slug: "ai-engineer", command: "/ai-engineer", domain: "architecture" },
   { slug: "techlead", command: "/techlead", domain: "architecture" },
   { slug: "database", command: "/database", domain: "architecture" },
   { slug: "devops", command: "/devops", domain: "architecture" },

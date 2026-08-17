@@ -1,5 +1,7 @@
 import { ImageResponse } from "next/og";
 import { getTranslations } from "next-intl/server";
+import agentsData from "@/content/agents.generated.json";
+import skillsData from "@/content/skills.generated.json";
 
 export const alt = "Izanagi AI — The runtime that orchestrates engineering agents";
 export const size = { width: 1200, height: 630 };
@@ -59,7 +61,7 @@ export default async function Image({
             letterSpacing: 1,
           }}
         >
-          21 agents · 212 skills · self-healing runtime · izanagi-ai
+          {agentsData.length} agents · {skillsData.length} skills · self-healing runtime · izanagi-ai
         </div>
       </div>
     ),

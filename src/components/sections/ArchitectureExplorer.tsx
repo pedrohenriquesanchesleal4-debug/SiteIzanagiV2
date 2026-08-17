@@ -38,7 +38,7 @@ function useViewportTier(): Tier {
  * rendered as an interactive closed-loop diagram. Desktop gets a horizontal
  * pipeline with a curved feedback path; touch/narrow viewports get a
  * vertical accordion — same interaction language and detail content as
- * AgentAtlas, applied to 5 layers instead of 21 agents. Layer data itself
+ * AgentAtlas, applied to 5 layers instead of the 22 agents. Layer data itself
  * lives in ArchitectureExplorerData.tsx (grounded in node_modules/izanagi-ai
  * core/*.md engine docs) to avoid a circular import between this file and
  * its Desktop/Mobile children.

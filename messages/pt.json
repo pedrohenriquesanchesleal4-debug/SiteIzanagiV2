@@ -350,9 +350,9 @@
   },
   "install": {
     "eyebrow": "Comece agora",
-    "title": "Três comandos. Zero configuração.",
-    "body": "O Izanagi detecta sua CLI de IA — Claude Code, Cursor, Codex, Copilot ou Kimi — e gera só os adapters que você precisa.",
-    "steps": ["npm install -g izanagi-ai", "npx izanagi init", "npx izanagi run --task \"sua primeira tarefa\""],
+    "title": "Quatro comandos. Zero configuração.",
+    "body": "O Izanagi detecta sua CLI de IA — Claude Code, Cursor, Codex, Copilot ou Kimi — e gera só os adapters que você precisa. Acompanhe cada execução ao vivo no dashboard local.",
+    "steps": ["npm install -g izanagi-ai", "npx izanagi init", "npx izanagi run --task \"sua primeira tarefa\"", "npx izanagi dashboard"],
     "copy": "Copiar",
     "copied": "Copiado",
     "note": "Publicado no npm como izanagi-ai — licença MIT."
